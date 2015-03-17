@@ -1,0 +1,136 @@
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/PlayerEquipment"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/deep_blue"
+    android:orientation="vertical"
+    tools:context="com.s3ns3i.degejm.PlayerEquipmentFragment" >
+
+    <RelativeLayout
+        android:id="@+id/RelativeLayout1"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical" >
+
+        <TextView
+            android:id="@+id/playersNicknameTextView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text=""
+            android:textAppearance="?android:attr/textAppearanceLarge" />
+
+        <Button
+            android:id="@+id/armorButton"
+            android:layout_width="96dp"
+            android:layout_height="192dp"
+            android:layout_alignLeft="@+id/helmetButton"
+            android:layout_below="@+id/helmetButton"
+            android:background="@drawable/armor_empty_slot"
+            android:contentDescription="@string/armorSlotString"
+            android:longClickable="true" />
+
+        <Button
+            android:id="@+id/bootsButton"
+            android:layout_width="96dp"
+            android:layout_height="96dp"
+            android:layout_alignLeft="@+id/armorButton"
+            android:layout_below="@+id/armorButton"
+            android:background="@drawable/boots_empty_slot"
+            android:contentDescription="@string/bootsSlotString"
+            android:longClickable="true" />
+
+        <Button
+            android:id="@+id/offhandButton"
+            android:layout_width="96dp"
+            android:layout_height="96dp"
+            android:layout_alignLeft="@+id/secondRingButton"
+            android:layout_alignTop="@+id/armorButton"
+            android:background="@drawable/offhand_empty_slot"
+            android:contentDescription="@string/offhandSlotString"
+            android:longClickable="true" />
+
+        <Button
+            android:id="@+id/weaponButton"
+            android:layout_width="96dp"
+            android:layout_height="96dp"
+            android:layout_alignTop="@+id/armorButton"
+            android:layout_toLeftOf="@+id/armorButton"
+            android:background="@drawable/weapon_empty_slot"
+            android:contentDescription="@string/weaponSlotString"
+            android:longClickable="true" />
+
+        <Button
+            android:id="@+id/secondRingButton"
+            android:layout_width="96dp"
+            android:layout_height="96dp"
+            android:layout_below="@+id/offhandButton"
+            android:layout_toRightOf="@+id/armorButton"
+            android:background="@drawable/ring_empty_slot"
+            android:contentDescription="@string/secondRingSlotString"
+            android:longClickable="true" />
+
+        <Button
+            android:id="@+id/firstRingButton"
+            android:layout_width="96dp"
+            android:layout_height="96dp"
+            android:layout_alignLeft="@+id/secondRingButton"
+            android:layout_below="@+id/secondRingButton"
+            android:background="@drawable/ring_empty_slot"
+            android:contentDescription="@string/firstRingSlotString"
+            android:longClickable="true" />
+
+        <Button
+            android:id="@+id/glovesButton"
+            android:layout_width="96dp"
+            android:layout_height="96dp"
+            android:layout_alignRight="@+id/weaponButton"
+            android:layout_alignTop="@+id/secondRingButton"
+            android:background="@drawable/gloves_empty_slot"
+            android:contentDescription="@string/glovesSlotString"
+            android:longClickable="true" />
+
+        <Button
+            android:id="@+id/helmetButton"
+            android:layout_width="96dp"
+            android:layout_height="96dp"
+            android:layout_below="@+id/playersNicknameTextView"
+            android:layout_centerHorizontal="true"
+            android:background="@drawable/helmet_empty_slot"
+            android:contentDescription="@string/helmetSlotString"
+            android:longClickable="true" />
+
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:id="@+id/RelativeLayout2"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" >
+
+        <Button
+            android:id="@+id/button1"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentBottom="true"
+            android:text="Button" />
+
+        <Button
+            android:id="@+id/createCharacterButton"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentBottom="true"
+            android:layout_alignParentRight="true"
+            android:text="@string/createCharacterString" />
+
+        <Button
+            android:id="@+id/button2"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentBottom="true"
+            android:layout_centerHorizontal="true"
+            android:text="Button" />
+
+    </RelativeLayout>
+
+</LinearLayout>

@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <string name="app_name">De Gejm 0.1a</string>
+    <string name="title_section1">Utwórz postać</string>
+    <string name="title_section2">Idź na arenę</string>
+    <string name="title_section3">Opcje (lol)</string>
+    <string name="navigation_drawer_open">Otwórz panel nawigacyjny</string>
+    <string name="navigation_drawer_close">Zamknij panel nawigacyjny</string>
+    <string name="action_example">n00b</string>
+    <string name="action_settings">Ustawienia</string>
+    <string name="nicknameString">Twój nick</string>
+    <string name="classString">Klasa</string>
+    <string name="raceString">Rasa</string>
+    <string name="decrementString">-</string>
+    <string name="incrementString">+</string>
+    <string name="strengthString">Siła</string>
+    <string name="agilityString">Zręczność</string>
+    <string name="intelligenceString">Inteligencja</string>
+    <string name="baseHPString">Pula witalności</string>
+    <string name="baseManaString">Pula many</string>
+    <string name="backString">Wstecz</string>
+    <string name="createCharacterString">Utwórz postać</string>
+    <string name="chooseInventoryString">Przejdź do ekwipunku</string>
+    <string name="strengthValueString">20</string>
+    <string name="agilityValueString">20</string>
+    <string name="intelligenceValueString">20</string>
+    <string name="baseHPValueString">20</string>
+    <string name="baseManaValueString">20</string>
+    <string name="hintString">nickname</string>
+    <string name="connectionMessage">Łączenie z głównym serwerem&#8230;</string>
+    <string name="title_activity_character_creation">Tworzenie postaci</string>
+    <string name="firstTextString">MEJN MENU</string>
+    <string name="secondTextString">NAJTS OF DE RAUND TEJBYL PRIZENTS:</string>
+    <string name="thirdTextString">DI ADWENCZER GEJM</string>
+    <string name="latitudeString">Latitude: </string>
+    <string name="longitudeString">Longitude: </string>
+    <string name="compare_items">Porównaj</string>
+    <string name="equip_item">Załóż</string>
+
+    <string-array name="drawer_menu_array">
+        <item>Utwórz postać</item>
+        <item>Idź na arenę</item>
+        <item>Opcje (lol)</item>
+    </string-array>
+
+    <string name="defaultStatsString">Resetuj staty</string>
+    <string name="pointPoolLabelString">Liczba punktów do rozdania: </string>
+    <string name="helmetSlotString">Slot na hełm</string>
+    <string name="armorSlotString">Slot na zbroję</string>
+    <string name="weaponSlotString">Slot na broń</string>
+    <string name="offhandSlotString">Slot na broń drugorzędną</string>
+    <string name="glovesSlotString">Slot na rękawice</string>
+    <string name="firstRingSlotString">Slot na pierścień</string>
+    <string name="secondRingSlotString">Slot na pierścień</string>
+    <string name="bootsSlotString">Slot na buty</string>
+    <string name="title_activity_test">TestActivity</string>
+    <color name="deep_blue">#3F48CC</color>
+    
+    <string name="backToStatsString">TestActivity</string>
+    <string name="OKString">TestActivity</string>
+    <string name="goToArenaString">TestActivity</string>
+    
+
+</resources>
