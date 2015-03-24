@@ -60,6 +60,12 @@
     <string name="backToStatsString">TestActivity</string>
     <string name="OKString">TestActivity</string>
     <string name="goToArenaString">TestActivity</string>
+    <string name="title_activity_main_drawer">MainDrawerActivity</string>
+
+    <string name="hello_world">Hello world!</string>
+
+<!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
     
 
 </resources>
