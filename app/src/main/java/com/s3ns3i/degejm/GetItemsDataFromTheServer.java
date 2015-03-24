@@ -15,15 +15,15 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- * TODO Jednak wszystko b�dzie w jednym module. Tzn, ka�dy musi zrobi�
- * wczytywanie danych z serwera na sw�j spos�b (je�li potrzebuje) Tutaj trzeba
- * zrobi�:
- * - wczytanie tw�ch tablic do spinner�w,
+ * TODO Jednak wszystko będzie w jednym module. Tzn, każdy musi zrobić
+ * wczytywanie danych z serwera na swój sposób (jeśli potrzebuje) Tutaj trzeba
+ * zrobić:
+ * - wczytanie twóch tablic do spinnerów,
  * 	-- klasy
  * 	-- rasy
- * - wczytanie danych do trzech zmiennych i wy�wietli� je (pocz�tkowe staty)
- * 	--si�a
- * 	-- zr�czno��
+ * - wczytanie danych do trzech zmiennych i wyświetlić je (początkowe staty)
+ * 	--siła
+ * 	-- zręczność
  * 	-- inteligencja
  * 
  * @author s3ns3i

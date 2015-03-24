@@ -23,7 +23,7 @@ public class Items {
 	//===============C-Tor================================
 	
 	public Items(){
-		//Kurde no, muszê dorabiaæ konstruktory. //s3ns3i
+		//Kurde no, muszÄ™ dorabiaÄ‡ konstruktory. //s3ns3i
 		this.ID_ = 0;
 		this.meeleDefense_ = 0;
 		this.magicDefense_ = 0;

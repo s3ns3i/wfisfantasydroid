@@ -2,9 +2,10 @@
 <resources>
 
     <string name="app_name">De Gejm 0.1a</string>
-    <string name="title_section1">Utwórz postać</string>
-    <string name="title_section2">Idź na arenę</string>
-    <string name="title_section3">Opcje (lol)</string>
+    <string name="title_section1">Menu główne</string>
+    <string name="title_section2">Utwórz postać</string>
+    <string name="title_section3">Idź na arenę</string>
+    <string name="title_section4">Ekwipunek</string>
     <string name="navigation_drawer_open">Otwórz panel nawigacyjny</string>
     <string name="navigation_drawer_close">Zamknij panel nawigacyjny</string>
     <string name="action_example">n00b</string>
@@ -39,9 +40,10 @@
     <string name="equip_item">Załóż</string>
 
     <string-array name="drawer_menu_array">
+        <item>Menu główne</item>
         <item>Utwórz postać</item>
         <item>Idź na arenę</item>
-        <item>Opcje (lol)</item>
+        <item>Ekwipunek</item>
     </string-array>
 
     <string name="defaultStatsString">Resetuj staty</string>
@@ -56,16 +58,7 @@
     <string name="bootsSlotString">Slot na buty</string>
     <string name="title_activity_test">TestActivity</string>
     <color name="deep_blue">#3F48CC</color>
-    
-    <string name="backToStatsString">TestActivity</string>
-    <string name="OKString">TestActivity</string>
-    <string name="goToArenaString">TestActivity</string>
     <string name="title_activity_main_drawer">MainDrawerActivity</string>
-
-    <string name="hello_world">Hello world!</string>
-
-<!-- TODO: Remove or change this placeholder text -->
-    <string name="hello_blank_fragment">Hello blank fragment</string>
     
 
 </resources>

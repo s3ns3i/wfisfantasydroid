@@ -13,7 +13,7 @@ public class Arena {
 	CombatResolution obj = null;
 	
 	 return obj;
-	//tutaj trzeba wyci¹gn¹æ id gracza i wyssaæ z servera ataki, które w niego lec¹
+	//tutaj trzeba wyciÄ…gnÄ…Ä‡ id gracza i wyssaÄ‡ z servera ataki, ktÃ³re w niego lecÄ…
  }
  
  public void sendArenaDataToMySQL(){

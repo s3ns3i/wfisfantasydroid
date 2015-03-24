@@ -1,4 +1,4 @@
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/PlayerEquipment"
     android:layout_width="match_parent"
@@ -100,37 +100,14 @@
             android:contentDescription="@string/helmetSlotString"
             android:longClickable="true" />
 
-    </RelativeLayout>
-
-    <RelativeLayout
-        android:id="@+id/RelativeLayout2"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content" >
-
-        <Button
-            android:id="@+id/button1"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignParentLeft="true"
-            android:layout_alignParentBottom="true"
-            android:text="Button" />
-
         <Button
             android:id="@+id/createCharacterButton"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_alignParentBottom="true"
-            android:layout_alignParentRight="true"
-            android:text="@string/createCharacterString" />
-
-        <Button
-            android:id="@+id/button2"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignParentBottom="true"
-            android:layout_centerHorizontal="true"
-            android:text="Button" />
+            android:text="@string/createCharacterString"
+            android:layout_below="@+id/firstRingButton"
+            android:layout_alignParentRight="true" />
 
     </RelativeLayout>
 
-</LinearLayout>
+</ScrollView>

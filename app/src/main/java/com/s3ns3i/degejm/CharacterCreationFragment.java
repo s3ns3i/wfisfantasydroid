@@ -176,18 +176,18 @@ OnItemSelectedListener {
 				//	or replace with current fragment.
 				//	of make activity that will launch with fragment.
 				Bundle bundle = new Bundle();
-				bundle.putString(CharacterCreationWindow.nameKey, nicknameEditText.getText().toString());
-				bundle.putString(CharacterCreationWindow.raceKey, racesSpinner.getSelectedItem().toString());
-				bundle.putLong(CharacterCreationWindow.raceIDKey, racesSpinner.getSelectedItemId());
-				bundle.putString(CharacterCreationWindow.classKey, classesSpinner.getSelectedItem().toString());
-				bundle.putLong(CharacterCreationWindow.classIDKey, classesSpinner.getSelectedItemId());
-				bundle.putString(CharacterCreationWindow.strKey, strTV.getText().toString());
-				bundle.putString(CharacterCreationWindow.agiKey, agiTV.getText().toString());
-				bundle.putString(CharacterCreationWindow.intKey, intTV.getText().toString());
-				bundle.putString(CharacterCreationWindow.hpKey, baseHPTV.getText().toString());
-				bundle.putString(CharacterCreationWindow.manaKey, baseManaTV.getText().toString());
+				bundle.putString(MainDrawerActivity.nameKey, nicknameEditText.getText().toString());
+				bundle.putString(MainDrawerActivity.raceKey, racesSpinner.getSelectedItem().toString());
+				bundle.putLong(MainDrawerActivity.raceIDKey, racesSpinner.getSelectedItemId());
+				bundle.putString(MainDrawerActivity.classKey, classesSpinner.getSelectedItem().toString());
+				bundle.putLong(MainDrawerActivity.classIDKey, classesSpinner.getSelectedItemId());
+				bundle.putString(MainDrawerActivity.strKey, strTV.getText().toString());
+				bundle.putString(MainDrawerActivity.agiKey, agiTV.getText().toString());
+				bundle.putString(MainDrawerActivity.intKey, intTV.getText().toString());
+				bundle.putString(MainDrawerActivity.hpKey, baseHPTV.getText().toString());
+				bundle.putString(MainDrawerActivity.manaKey, baseManaTV.getText().toString());
 				Intent intent = new Intent();
-				intent.putExtra(CharacterCreationWindow.bundleKey, bundle);
+				intent.putExtra(MainDrawerActivity.bundleKey, bundle);
 				PlayerEquipmentFragment PEF = new PlayerEquipmentFragment();
 				PEF.setArguments(bundle);
 				FragmentTransaction ft = getFragmentManager().beginTransaction();

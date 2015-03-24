@@ -19,6 +19,7 @@ import java.util.List;
 
 public class PlayerEquipmentFragment extends Fragment implements OnClickListener, OnLongClickListener{
 
+    private static final String ARG_SECTION_NUMBER = "section_number";
 	private final String registerURL = "register.php";
 	private final String getAllItemsURL = "get_all_items.php";
     private final String getPlayersItemsURL = "get_armor.php"
@@ -33,7 +34,8 @@ public class PlayerEquipmentFragment extends Fragment implements OnClickListener
     private Button firstRingButton;
     private Button secondRingButton;
     private Button createCharacterButton;
-    private CharacterCreationWindow CCW;
+    private MainDrawerActivity MDA;
+    //private CharacterCreationWindow CCW;
     TextView nicknameTV;
     private Bundle bundle;
 	private Player player;
@@ -51,7 +53,23 @@ public class PlayerEquipmentFragment extends Fragment implements OnClickListener
     //private Items item;
     //Depending on what slot will we tap, it will be filled with corresponding list.
     //private AlertDialog itemsListDialog;
-	
+
+    /**
+     * Returns a new instance of this fragment for the given section
+     * number.
+     */
+    public static PlayerEquipmentFragment newInstance(int sectionNumber) {
+        PlayerEquipmentFragment fragment = new PlayerEquipmentFragment();
+        Bundle args = new Bundle();
+        args.putInt(ARG_SECTION_NUMBER, sectionNumber);
+        fragment.setArguments(args);
+        return fragment;
+    }
+
+    public PlayerEquipmentFragment() {
+
+    }
+
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState){
 		View rootView = inflater.inflate(R.layout.fragment_player_equipment, container, false);
@@ -83,21 +101,24 @@ public class PlayerEquipmentFragment extends Fragment implements OnClickListener
 	    secondRingButton.setOnLongClickListener(this);
         createCharacterButton = (Button) rootView.findViewById(R.id.createCharacterButton);
         createCharacterButton.setOnClickListener(this);
-        CCW = (CharacterCreationWindow) getActivity();
+
+        MDA = (MainDrawerActivity) getActivity();
+        //CCW = (CharacterCreationWindow) getActivity();
         nicknameTV = (TextView) rootView.findViewById(R.id.playersNicknameTextView);
         bundle = getArguments();
-        player = CCW.getPlayer();
-        nameValue = bundle.getString(CharacterCreationWindow.nameKey);
+        player = MDA.getPlayer();
+        //player = CCW.getPlayer();
+        nameValue = bundle.getString(MainDrawerActivity.nameKey);
         nicknameTV.setText(nameValue);
-        raceValue = bundle.getString(CharacterCreationWindow.raceKey);
-        raceIDValue = bundle.getLong(CharacterCreationWindow.raceIDKey);
-        classValue = bundle.getString(CharacterCreationWindow.classKey);
-        classIDValue = bundle.getLong(CharacterCreationWindow.classIDKey);
-        strValue = bundle.getString(CharacterCreationWindow.strKey);
-        agiValue = bundle.getString(CharacterCreationWindow.agiKey);
-        intValue = bundle.getString(CharacterCreationWindow.intKey);
-        hpValue = bundle.getString(CharacterCreationWindow.hpKey);
-        manaValue = bundle.getString(CharacterCreationWindow.manaKey);
+        raceValue = bundle.getString(MainDrawerActivity.raceKey);
+        raceIDValue = bundle.getLong(MainDrawerActivity.raceIDKey);
+        classValue = bundle.getString(MainDrawerActivity.classKey);
+        classIDValue = bundle.getLong(MainDrawerActivity.classIDKey);
+        strValue = bundle.getString(MainDrawerActivity.strKey);
+        agiValue = bundle.getString(MainDrawerActivity.agiKey);
+        intValue = bundle.getString(MainDrawerActivity.intKey);
+        hpValue = bundle.getString(MainDrawerActivity.hpKey);
+        manaValue = bundle.getString(MainDrawerActivity.manaKey);
         playerParams = new ArrayList<NameValuePair>();
         allItemsList = new ArrayList<ArrayList<Items>>();
         playerItems = new Items[numberOfItemTypes];
@@ -160,26 +181,26 @@ public class PlayerEquipmentFragment extends Fragment implements OnClickListener
 			//isLocationButton = true;
 			//createCharacterButton.setClickable(false);
 			//messageLabel.setText("Obtaining your location...");
-			playerParams.add(new BasicNameValuePair(CharacterCreationWindow.singlePlayerKey, "0"));
-			playerParams.add(new BasicNameValuePair(CharacterCreationWindow.nameKey, nameValue));
-			playerParams.add(new BasicNameValuePair(CharacterCreationWindow.raceKey, raceValue));
-			playerParams.add(new BasicNameValuePair(CharacterCreationWindow.raceIDKey, Long.toString(raceIDValue)));
-			playerParams.add(new BasicNameValuePair(CharacterCreationWindow.classKey, classValue));
-			playerParams.add(new BasicNameValuePair(CharacterCreationWindow.classIDKey, Long.toString(classIDValue)));
-			playerParams.add(new BasicNameValuePair(CharacterCreationWindow.strKey, strValue));
-			playerParams.add(new BasicNameValuePair(CharacterCreationWindow.agiKey, agiValue));
-			playerParams.add(new BasicNameValuePair(CharacterCreationWindow.intKey, intValue));
-			playerParams.add(new BasicNameValuePair(CharacterCreationWindow.chestKey, Integer.toString(playerItems[0].getID_())));
-			playerParams.add(new BasicNameValuePair(CharacterCreationWindow.bootsKey, Integer.toString(playerItems[1].getID_())));
-			playerParams.add(new BasicNameValuePair(CharacterCreationWindow.glovesKey, Integer.toString(playerItems[2].getID_())));
-			playerParams.add(new BasicNameValuePair(CharacterCreationWindow.helmetKey, Integer.toString(playerItems[3].getID_())));
-			playerParams.add(new BasicNameValuePair(CharacterCreationWindow.weaponKey, Integer.toString(playerItems[4].getID_())));
-			playerParams.add(new BasicNameValuePair(CharacterCreationWindow.firstRingKey, Integer.toString(playerItems[5].getID_())));
+			playerParams.add(new BasicNameValuePair(MainDrawerActivity.singlePlayerKey, "0"));
+			playerParams.add(new BasicNameValuePair(MainDrawerActivity.nameKey, nameValue));
+			playerParams.add(new BasicNameValuePair(MainDrawerActivity.raceKey, raceValue));
+			playerParams.add(new BasicNameValuePair(MainDrawerActivity.raceIDKey, Long.toString(raceIDValue)));
+			playerParams.add(new BasicNameValuePair(MainDrawerActivity.classKey, classValue));
+			playerParams.add(new BasicNameValuePair(MainDrawerActivity.classIDKey, Long.toString(classIDValue)));
+			playerParams.add(new BasicNameValuePair(MainDrawerActivity.strKey, strValue));
+			playerParams.add(new BasicNameValuePair(MainDrawerActivity.agiKey, agiValue));
+			playerParams.add(new BasicNameValuePair(MainDrawerActivity.intKey, intValue));
+			playerParams.add(new BasicNameValuePair(MainDrawerActivity.chestKey, Integer.toString(playerItems[0].getID_())));
+			playerParams.add(new BasicNameValuePair(MainDrawerActivity.bootsKey, Integer.toString(playerItems[1].getID_())));
+			playerParams.add(new BasicNameValuePair(MainDrawerActivity.glovesKey, Integer.toString(playerItems[2].getID_())));
+			playerParams.add(new BasicNameValuePair(MainDrawerActivity.helmetKey, Integer.toString(playerItems[3].getID_())));
+			playerParams.add(new BasicNameValuePair(MainDrawerActivity.weaponKey, Integer.toString(playerItems[4].getID_())));
+			playerParams.add(new BasicNameValuePair(MainDrawerActivity.firstRingKey, Integer.toString(playerItems[5].getID_())));
 			//playerParams.add(new BasicNameValuePair(CharacterCreationWindow.secondRingKey, Integer.toString(playerItems[6].getID_())));
-			playerParams.add(new BasicNameValuePair(CharacterCreationWindow.offhandKey, Integer.toString(playerItems[7].getID_())));
-			playerParams.add(new BasicNameValuePair(CharacterCreationWindow.hpKey, hpValue));
-			playerParams.add(new BasicNameValuePair(CharacterCreationWindow.manaKey, manaValue));
-			playerParams.add(new BasicNameValuePair(CharacterCreationWindow.expKey, "0"));
+			playerParams.add(new BasicNameValuePair(MainDrawerActivity.offhandKey, Integer.toString(playerItems[7].getID_())));
+			playerParams.add(new BasicNameValuePair(MainDrawerActivity.hpKey, hpValue));
+			playerParams.add(new BasicNameValuePair(MainDrawerActivity.manaKey, manaValue));
+			playerParams.add(new BasicNameValuePair(MainDrawerActivity.expKey, "0"));
 			new SendNewCharacterToTheServer(registerURL, playerParams, getActivity(), player).execute();
 			break;
 		}

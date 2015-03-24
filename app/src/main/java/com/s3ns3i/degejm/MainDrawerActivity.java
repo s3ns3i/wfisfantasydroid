@@ -1,22 +1,16 @@
 package com.s3ns3i.degejm;
 
-import android.app.Activity;
-
 import android.app.ActionBar;
+import android.app.Activity;
 import android.app.Fragment;
 import android.app.FragmentManager;
-import android.content.Context;
-import android.os.Build;
 import android.os.Bundle;
-import android.view.Gravity;
+import android.support.v4.widget.DrawerLayout;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
-import android.support.v4.widget.DrawerLayout;
-import android.widget.ArrayAdapter;
-import android.widget.TextView;
 
 
 public class MainDrawerActivity extends Activity
@@ -31,6 +25,27 @@ public class MainDrawerActivity extends Activity
      * Used to store the last screen title. For use in {@link #restoreActionBar()}.
      */
     private CharSequence mTitle;
+
+    //Objects from Character Creation Window
+    public final static String singlePlayerKey = "single_player", nameKey = "name", raceKey = "race", raceIDKey = "race_id"
+            , classKey = "class", classIDKey = "class_id", chestKey = "chest", bootsKey = "boots", glovesKey = "gloves"
+            , helmetKey = "helm", weaponKey = "weapon", firstRingKey = "ring", secondRingKey = "ring2", offhandKey = "offhand"
+            , strKey = "str", agiKey = "agi", intKey = "int", hpKey = "hp", manaKey = "mana", expKey = "exp", bundleKey = "bundle";
+    private Player player;
+
+    public Player getPlayer() {
+        return player;
+    }
+
+    public void setPlayer(Player player) {
+        this.player = player;
+    }
+
+    //Objects from
+
+
+
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -54,19 +69,23 @@ public class MainDrawerActivity extends Activity
         FragmentManager fragmentManager = getFragmentManager();
 
         switch(position) {
-
             case 0:
                 fragmentManager.beginTransaction()
-                        .replace(R.id.container, CharacterPlaceholderFragment.newInstance(position + 1))
+                    .replace(R.id.container, PlaceholderFragment.newInstance(position + 1))
+                    .commit();
+                break;
+            case 1:
+                fragmentManager.beginTransaction()
+                        .replace(R.id.container, CharacterCreationFragment.newInstance(position + 1))
                         .commit();
                 break;
-
-
-
-            default:
+            case 2:
+                break;
+            case 3:
                 fragmentManager.beginTransaction()
-                        .replace(R.id.container, PlaceholderFragment.newInstance(position + 1))
+                        .replace(R.id.container, PlayerEquipmentFragment.newInstance(position + 1))
                         .commit();
+                break;
         }
 
 
@@ -103,7 +122,7 @@ public class MainDrawerActivity extends Activity
             // Only show items in the action bar relevant to this screen
             // if the drawer is not showing. Otherwise, let the drawer
             // decide what to show in the action bar.
-            getMenuInflater().inflate(R.menu.menu_main_drawer, menu);
+            getMenuInflater().inflate(R.menu.main_menu, menu);
             restoreActionBar();
             return true;
         }
@@ -124,9 +143,6 @@ public class MainDrawerActivity extends Activity
 
         return super.onOptionsItemSelected(item);
     }
-
-
-
 
     /**
      * A placeholder fragment containing a simple view.
@@ -158,55 +174,7 @@ public class MainDrawerActivity extends Activity
         @Override
         public View onCreateView(LayoutInflater inflater, ViewGroup container,
                                  Bundle savedInstanceState) {
-            View rootView = inflater.inflate(R.layout.fragment_player_equipment, container, false);
-            return rootView;
-        }
-
-        @Override
-        public void onAttach(Activity activity) {
-            super.onAttach(activity);
-            ((MainDrawerActivity) activity).onSectionAttached(
-                    getArguments().getInt(ARG_SECTION_NUMBER));
-        }
-    }
-
-    /**
-     * A placeholder fragment containing a simple view.
-     */
-    public static class CharacterPlaceholderFragment extends Fragment {
-        /**
-         * The fragment argument representing the section number for this
-         * fragment.
-         */
-        private static final String ARG_SECTION_NUMBER = "section_number";
-
-        /**
-         * Returns a new instance of this fragment for the given section
-         * number.
-         */
-        public static CharacterPlaceholderFragment newInstance(int sectionNumber) {
-
-
-            CharacterPlaceholderFragment fragment = new CharacterPlaceholderFragment();
-
-            Bundle args = new Bundle();
-            args.putInt(ARG_SECTION_NUMBER, sectionNumber);
-            fragment.setArguments(args);
-
-
-            return fragment;
-        }
-
-        public CharacterPlaceholderFragment() {
-
-
-        }
-
-        @Override
-        public View onCreateView(LayoutInflater inflater, ViewGroup container,
-                                 Bundle savedInstanceState) {
-
-            View rootView = inflater.inflate(R.layout.fragment_character_creation, container, false);
+            View rootView = inflater.inflate(R.layout.fragment_main_menu, container, false);
             return rootView;
         }
 
