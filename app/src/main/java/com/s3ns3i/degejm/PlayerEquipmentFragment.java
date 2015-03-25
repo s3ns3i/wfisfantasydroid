@@ -144,35 +144,43 @@ public class PlayerEquipmentFragment extends Fragment implements OnClickListener
 		
 		switch(whichButton){
 		case R.id.armorButton:
-			itemInfo = new ItemInfoFragment(playerItems[0], null, false);
+			itemInfo = new ItemInfoFragment();
+            itemInfo.setArguments(playerItems[0], null, false);
 			itemInfo.show(getFragmentManager(), "item_info");
 			break;
 		case R.id.bootsButton:
-			itemInfo = new ItemInfoFragment(playerItems[1], null, false);
+			itemInfo = new ItemInfoFragment();
+            itemInfo.setArguments(playerItems[1], null, false);
 			itemInfo.show(getFragmentManager(), "item_info");
 			break;
 		case R.id.glovesButton:
-			itemInfo = new ItemInfoFragment(playerItems[2], null, false);
+			itemInfo = new ItemInfoFragment();
+            itemInfo.setArguments(playerItems[2], null, false);
 			itemInfo.show(getFragmentManager(), "item_info");
 			break;
 		case R.id.helmetButton:
-			itemInfo = new ItemInfoFragment(playerItems[3], null, false);
+			itemInfo = new ItemInfoFragment();
+            itemInfo.setArguments(playerItems[3], null, false);
 			itemInfo.show(getFragmentManager(), "item_info");
 			break;
 		case R.id.weaponButton:
-			itemInfo = new ItemInfoFragment(playerItems[4], null, false);
+			itemInfo = new ItemInfoFragment();
+            itemInfo.setArguments(playerItems[4], null, false);
 			itemInfo.show(getFragmentManager(), "item_info");
 			break;
 		case R.id.firstRingButton:
-			itemInfo = new ItemInfoFragment(playerItems[5], null, false);
+			itemInfo = new ItemInfoFragment();
+            itemInfo.setArguments(playerItems[5], null, false);
 			itemInfo.show(getFragmentManager(), "item_info");
 			break;
 		case R.id.secondRingButton:
-			itemInfo = new ItemInfoFragment(playerItems[6], null, false);
+			itemInfo = new ItemInfoFragment();
+            itemInfo.setArguments(playerItems[6], null, false);
 			itemInfo.show(getFragmentManager(), "item_info");
 			break;
 		case R.id.offhandButton:
-			itemInfo = new ItemInfoFragment(playerItems[7], null, false);
+			itemInfo = new ItemInfoFragment();
+            itemInfo.setArguments(playerItems[7], null, false);
 			itemInfo.show(getFragmentManager(), "item_info");
 			break;
 		case R.id.createCharacterButton:
@@ -181,27 +189,27 @@ public class PlayerEquipmentFragment extends Fragment implements OnClickListener
 			//isLocationButton = true;
 			//createCharacterButton.setClickable(false);
 			//messageLabel.setText("Obtaining your location...");
-			playerParams.add(new BasicNameValuePair(MainDrawerActivity.singlePlayerKey, "0"));
-			playerParams.add(new BasicNameValuePair(MainDrawerActivity.nameKey, nameValue));
-			playerParams.add(new BasicNameValuePair(MainDrawerActivity.raceKey, raceValue));
-			playerParams.add(new BasicNameValuePair(MainDrawerActivity.raceIDKey, Long.toString(raceIDValue)));
-			playerParams.add(new BasicNameValuePair(MainDrawerActivity.classKey, classValue));
-			playerParams.add(new BasicNameValuePair(MainDrawerActivity.classIDKey, Long.toString(classIDValue)));
-			playerParams.add(new BasicNameValuePair(MainDrawerActivity.strKey, strValue));
-			playerParams.add(new BasicNameValuePair(MainDrawerActivity.agiKey, agiValue));
-			playerParams.add(new BasicNameValuePair(MainDrawerActivity.intKey, intValue));
-			playerParams.add(new BasicNameValuePair(MainDrawerActivity.chestKey, Integer.toString(playerItems[0].getID_())));
-			playerParams.add(new BasicNameValuePair(MainDrawerActivity.bootsKey, Integer.toString(playerItems[1].getID_())));
-			playerParams.add(new BasicNameValuePair(MainDrawerActivity.glovesKey, Integer.toString(playerItems[2].getID_())));
-			playerParams.add(new BasicNameValuePair(MainDrawerActivity.helmetKey, Integer.toString(playerItems[3].getID_())));
-			playerParams.add(new BasicNameValuePair(MainDrawerActivity.weaponKey, Integer.toString(playerItems[4].getID_())));
-			playerParams.add(new BasicNameValuePair(MainDrawerActivity.firstRingKey, Integer.toString(playerItems[5].getID_())));
+			playerParams.add(new BasicNameValuePair(MainDrawerActivity.singlePlayerKey, "0"));//0
+			playerParams.add(new BasicNameValuePair(MainDrawerActivity.nameKey, nameValue));//1
+			playerParams.add(new BasicNameValuePair(MainDrawerActivity.raceKey, raceValue));//2
+			playerParams.add(new BasicNameValuePair(MainDrawerActivity.raceIDKey, Long.toString(raceIDValue)));//3
+			playerParams.add(new BasicNameValuePair(MainDrawerActivity.classKey, classValue));//4
+			playerParams.add(new BasicNameValuePair(MainDrawerActivity.classIDKey, Long.toString(classIDValue)));//5
+			playerParams.add(new BasicNameValuePair(MainDrawerActivity.strKey, strValue));//6
+			playerParams.add(new BasicNameValuePair(MainDrawerActivity.agiKey, agiValue));//7
+			playerParams.add(new BasicNameValuePair(MainDrawerActivity.intKey, intValue));//8
+			playerParams.add(new BasicNameValuePair(MainDrawerActivity.chestKey, Integer.toString(playerItems[0].getID_())));//9
+			playerParams.add(new BasicNameValuePair(MainDrawerActivity.bootsKey, Integer.toString(playerItems[1].getID_())));//10
+			playerParams.add(new BasicNameValuePair(MainDrawerActivity.glovesKey, Integer.toString(playerItems[2].getID_())));//11
+			playerParams.add(new BasicNameValuePair(MainDrawerActivity.helmetKey, Integer.toString(playerItems[3].getID_())));//12
+			playerParams.add(new BasicNameValuePair(MainDrawerActivity.weaponKey, Integer.toString(playerItems[4].getID_())));//13
+			playerParams.add(new BasicNameValuePair(MainDrawerActivity.firstRingKey, Integer.toString(playerItems[5].getID_())));//14
 			//playerParams.add(new BasicNameValuePair(CharacterCreationWindow.secondRingKey, Integer.toString(playerItems[6].getID_())));
-			playerParams.add(new BasicNameValuePair(MainDrawerActivity.offhandKey, Integer.toString(playerItems[7].getID_())));
-			playerParams.add(new BasicNameValuePair(MainDrawerActivity.hpKey, hpValue));
-			playerParams.add(new BasicNameValuePair(MainDrawerActivity.manaKey, manaValue));
-			playerParams.add(new BasicNameValuePair(MainDrawerActivity.expKey, "0"));
-			new SendNewCharacterToTheServer(registerURL, playerParams, getActivity(), player).execute();
+			playerParams.add(new BasicNameValuePair(MainDrawerActivity.offhandKey, Integer.toString(playerItems[7].getID_())));//15
+			playerParams.add(new BasicNameValuePair(MainDrawerActivity.hpKey, hpValue));//16
+			playerParams.add(new BasicNameValuePair(MainDrawerActivity.manaKey, manaValue));//17
+			playerParams.add(new BasicNameValuePair(MainDrawerActivity.expKey, "0"));//18
+			new SendNewCharacterToTheServer(registerURL, playerParams, getActivity(), player).execute();//19
 			break;
 		}
 	}
@@ -211,35 +219,51 @@ public class PlayerEquipmentFragment extends Fragment implements OnClickListener
 		Integer whichButton = v.getId();
 		switch(whichButton){
 		case R.id.armorButton:
-			allItemsInfo = new AllItemsDialogFragment(allItemsList.get(0), playerItems[0], armorButton);
+//			allItemsInfo = new AllItemsDialogFragment(allItemsList.get(0), playerItems[0], armorButton);
+            allItemsInfo = new AllItemsDialogFragment();
+            allItemsInfo.setArguments(allItemsList.get(0), playerItems[0], armorButton);
 			allItemsInfo.show(getFragmentManager(), "all_item_info");
 			break;
 		case R.id.bootsButton:
-			allItemsInfo = new AllItemsDialogFragment(allItemsList.get(1), playerItems[1], bootsButton);
+//			allItemsInfo = new AllItemsDialogFragment(allItemsList.get(1), playerItems[1], bootsButton);
+            allItemsInfo = new AllItemsDialogFragment();
+            allItemsInfo.setArguments(allItemsList.get(1), playerItems[1], bootsButton);
 			allItemsInfo.show(getFragmentManager(), "all_item_info");
 			break;
 		case R.id.glovesButton:
-			allItemsInfo = new AllItemsDialogFragment(allItemsList.get(2), playerItems[2], glovesButton);
+//			allItemsInfo = new AllItemsDialogFragment(allItemsList.get(2), playerItems[2], glovesButton);
+            allItemsInfo = new AllItemsDialogFragment();
+            allItemsInfo.setArguments(allItemsList.get(2), playerItems[2], glovesButton);
 			allItemsInfo.show(getFragmentManager(), "all_item_info");
 			break;
 		case R.id.helmetButton:
-			allItemsInfo = new AllItemsDialogFragment(allItemsList.get(3), playerItems[3], helmetButton);
+//			allItemsInfo = new AllItemsDialogFragment(allItemsList.get(3), playerItems[3], helmetButton);
+            allItemsInfo = new AllItemsDialogFragment();
+            allItemsInfo.setArguments(allItemsList.get(3), playerItems[3], helmetButton);
 			allItemsInfo.show(getFragmentManager(), "all_item_info");
 			break;
 		case R.id.weaponButton:
-			allItemsInfo = new AllItemsDialogFragment(allItemsList.get(4), playerItems[4], weaponButton);
+//			allItemsInfo = new AllItemsDialogFragment(allItemsList.get(4), playerItems[4], weaponButton);
+            allItemsInfo = new AllItemsDialogFragment();
+            allItemsInfo.setArguments(allItemsList.get(4), playerItems[4], weaponButton);
 			allItemsInfo.show(getFragmentManager(), "all_item_info");
 			break;
 		case R.id.firstRingButton:
-			allItemsInfo = new AllItemsDialogFragment(allItemsList.get(5), playerItems[5], firstRingButton);
+//			allItemsInfo = new AllItemsDialogFragment(allItemsList.get(5), playerItems[5], firstRingButton);
+            allItemsInfo = new AllItemsDialogFragment();
+            allItemsInfo.setArguments(allItemsList.get(5), playerItems[5], firstRingButton);
 			allItemsInfo.show(getFragmentManager(), "all_item_info");
 			break;
 		case R.id.secondRingButton:
-			allItemsInfo = new AllItemsDialogFragment(allItemsList.get(5), playerItems[6], secondRingButton);
+//			allItemsInfo = new AllItemsDialogFragment(allItemsList.get(5), playerItems[6], secondRingButton);
+            allItemsInfo = new AllItemsDialogFragment();
+            allItemsInfo.setArguments(allItemsList.get(5), playerItems[6], secondRingButton);
 			allItemsInfo.show(getFragmentManager(), "all_item_info");
 			break;
 		case R.id.offhandButton:
-			allItemsInfo = new AllItemsDialogFragment(allItemsList.get(6), playerItems[7], offhandButton);
+//			allItemsInfo = new AllItemsDialogFragment(allItemsList.get(6), playerItems[7], offhandButton);
+            allItemsInfo = new AllItemsDialogFragment();
+            allItemsInfo.setArguments(allItemsList.get(6), playerItems[7], offhandButton);
 			allItemsInfo.show(getFragmentManager(), "all_item_info");
 			break;
 		}

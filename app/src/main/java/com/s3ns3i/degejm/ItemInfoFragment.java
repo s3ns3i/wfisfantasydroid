@@ -5,7 +5,7 @@ import android.app.Dialog;
 import android.app.DialogFragment;
 import android.os.Bundle;
 
-class ItemInfoFragment extends DialogFragment {
+public class ItemInfoFragment extends DialogFragment {
 	
 	private Boolean isCompare = false;
 	private Items item
@@ -15,11 +15,14 @@ class ItemInfoFragment extends DialogFragment {
 	 * @param items - ArrayList of item that will be shown 
 	 * @param isCompare - leave null, if you create dialog to show stats of an item that player is already wearing.
 	 */
-	public ItemInfoFragment(Items item, Items itemToCompare, Boolean isCompare){
-		this.item = item;
-		this.itemToCompare = itemToCompare;
-		this.isCompare = isCompare;
+	public ItemInfoFragment(){
 	}
+
+    public void setArguments(Items item, Items itemToCompare, Boolean isCompare){
+        this.item = item;
+        this.itemToCompare = itemToCompare;
+        this.isCompare = isCompare;
+    }
 	
 	public void isCompare(){
 		this.isCompare = isCompare;

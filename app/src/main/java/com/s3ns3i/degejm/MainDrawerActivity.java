@@ -12,6 +12,8 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 
+import java.io.IOException;
+
 
 public class MainDrawerActivity extends Activity
         implements NavigationDrawerFragment.NavigationDrawerCallbacks {
@@ -60,6 +62,12 @@ public class MainDrawerActivity extends Activity
         mNavigationDrawerFragment.setUp(
                 R.id.navigation_drawer,
                 (DrawerLayout) findViewById(R.id.drawer_layout));
+        try {
+            String playerID = FileManager.readPlayersIDFromFile();
+
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 
     @Override

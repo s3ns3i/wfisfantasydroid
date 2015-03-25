@@ -11,7 +11,7 @@ import android.widget.Button;
 import java.util.ArrayList;
 
 //=============================================
-class AllItemsDialogFragment extends DialogFragment{
+public class AllItemsDialogFragment extends DialogFragment{
 	
 	private ArrayList<Items> items;
 	//This item will be passed to the parent fragment.
@@ -29,20 +29,38 @@ class AllItemsDialogFragment extends DialogFragment{
 	 * @param items - ArrayList of item that will be shown 
 	 * @param selectedItem - returns clicked item to this reference.
 	 */
-	public AllItemsDialogFragment(ArrayList<Items> items, Items selectedItem, Button pressedButton){
-		this.items = items;
-		this.selectedItem = selectedItem;
-		this.pressedButton = pressedButton;
-		//itemsNames = new ArrayList<String>();
-		itemsCS = new CharSequence[items.size() + 1];
-		positionOnItemList_ = Integer.valueOf(0);
-		//itemsNames.add("Unequip item");
-		itemsCS[0] = "Unequip item";
-		for(int i = 1; i < items.size() + 1; i++){
-			//itemsNames.add(this.items.get(i - 1).getName_());
-			itemsCS[i] = this.items.get(i - 1).getName_();
-		}
-	}
+//	public AllItemsDialogFragment(ArrayList<Items> items, Items selectedItem, Button pressedButton){
+//		this.items = items;
+//		this.selectedItem = selectedItem;
+//		this.pressedButton = pressedButton;
+//		//itemsNames = new ArrayList<String>();
+//		itemsCS = new CharSequence[items.size() + 1];
+//		positionOnItemList_ = Integer.valueOf(0);
+//		//itemsNames.add("Unequip item");
+//		itemsCS[0] = "Unequip item";
+//		for(int i = 1; i < items.size() + 1; i++){
+//			//itemsNames.add(this.items.get(i - 1).getName_());
+//			itemsCS[i] = this.items.get(i - 1).getName_();
+//		}
+//	}
+
+    public AllItemsDialogFragment(){
+        //itemsNames = new ArrayList<String>();
+    }
+
+    public void setArguments(ArrayList<Items> items, Items selectedItem, Button pressedButton){
+        this.items = items;
+        this.selectedItem = selectedItem;
+        this.pressedButton = pressedButton;
+        itemsCS = new CharSequence[items.size() + 1];
+        positionOnItemList_ = Integer.valueOf(0);
+        //itemsNames.add("Unequip item");
+        itemsCS[0] = "Unequip item";
+        for(int i = 1; i < items.size() + 1; i++){
+            //itemsNames.add(this.items.get(i - 1).getName_());
+            itemsCS[i] = this.items.get(i - 1).getName_();
+        }
+    }
 	
 	@Override
 	public Dialog onCreateDialog(Bundle savedInstanceState) {

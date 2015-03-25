@@ -25,7 +25,7 @@ import java.util.List;
  * W konstruktorze inicjuj� obiekt JSONParser, list� parametr�w i doklejam do g��wnego adresu ten przekazany jako argument.
  * Jak wystartuje w�tek (new Sender().execute(); - nie tworzymy obiektu jawnie, bo nie trzeba), to najpierw wysy�a do
  * loga info, �e b�dzie komunikowa� si� z serwerem. Potem jsonParser rozpoczyna komunikacj�.
- * Je�li "json.getInt(TAG_SUCCESS);" zwr�ci "1" to znaczy, �e wszystko kul (wys�a� dane na serwa),
+ * Je�li "playerJson.getInt(TAG_SUCCESS);" zwr�ci "1" to znaczy, �e wszystko kul (wys�a� dane na serwa),
  * w przeciwnym wypadku, wiadomo.
  * Na dodatek 
  * 
@@ -40,7 +40,7 @@ import java.util.List;
 public class SendNewCharacterToTheServer extends
 		AsyncTask<String, String, String> {
 
-	private JSONObject json;
+	private JSONObject playerJson, itemsJson;
 	private JSONParser jsonParser;
 	private List<NameValuePair> params;
 	private Boolean isPostSuccessful;
@@ -49,6 +49,8 @@ public class SendNewCharacterToTheServer extends
 
 	// url to the server
 	private static String url = "http://wfisfantasy.16mb.com/";
+    private String registerURL;
+    private String armorURL;
 
 	// JSON Node name - this checks if posting to the server succeeded.
 	private static final String TAG_SUCCESS = "success";
@@ -74,7 +76,8 @@ public class SendNewCharacterToTheServer extends
 		isPostSuccessful = false;
 		this.context = context;
 		this.player = player;
-		url += phpURL;
+		registerURL = url + phpURL;
+        armorURL = url + "get_armor.php";
 	}
 
 	/**
@@ -95,11 +98,12 @@ public class SendNewCharacterToTheServer extends
 	 * Creating player
 	 * */
 	protected String doInBackground(String... args) {
-		json = jsonParser.makeHttpRequest(url, "POST", params);
+		playerJson = jsonParser.makeHttpRequest(registerURL, "POST", params);
+        //itemsJson = jsonParser.makeHttpRequest(armorURL, "POST", params);
 
 		// check for success tag
 		try {
-			int success = json.getInt(TAG_SUCCESS);
+			int success = playerJson.getInt(TAG_SUCCESS);
 
 			if (success == 1) {
 				// successfully created player
@@ -107,7 +111,8 @@ public class SendNewCharacterToTheServer extends
 				isPostSuccessful = true;
 				
 				//===========================Write data to Player object.==============================
-				player.setCharacterName_(json.getString("name"));
+//                player.setCharacterName_(params.get(1).getValue());
+				player.setCharacterName_(playerJson.getString("name"));
 				/**	TODO
 				 * Nie mog� ustawi� nazwy rasy ani nazwy klasy.
 				 * Tylko te warto�ci s� wysy�ane na serwer, wi�c r�wnie dobrze mog� od razu te warto�ci doda�
@@ -116,13 +121,25 @@ public class SendNewCharacterToTheServer extends
 				 * - Konstruktor klasy CharacterClass wymaga pe�no zmiennych, kt�rych w danym momencie nie posiadam.
 				 * Gdybym m�g� utworzy� pusty obiekt to po kropce tylko wywo�a�bym setClassName i po krzyku.
 				 */
-				//player.setCharacterRace_(new CharacterRace().setRaceName_(json.getString("race")));
-				//player.setClassName_(new CharacterClass().setClassName_(json.getString("class")));
-				player.setStrength_(json.getInt("str"));
-				player.setAgility_(json.getInt("agi"));
-				player.setInteligence_(json.getInt("int"));
-				player.setHealthPoints_(json.getInt("hp"));
-				player.setManaPoints_(json.getInt("mana"));
+				//player.setCharacterRace_(new CharacterRace().setRaceName_(playerJson.getString("race")));
+				//player.setClassName_(new CharacterClass().setClassName_(playerJson.getString("class")));
+//                CharacterRace CR = new CharacterRace();
+//                CR.setRaceName_(params.get(2).getValue());
+//                CR.setRaceID(Integer.valueOf(params.get(3).getValue()));
+//                CharacterClass CC = new CharacterClass();
+//                CC.setClassName_(params.get(4).getValue());
+//                CC.setClassID_(Integer.valueOf(params.get(5).getValue()));
+                //player.setCharacterRace_(new CharacterRace().setRaceName_(playerJson.getString("race")));
+                //player.setClassName_(new CharacterClass().setClassName_(playerJson.getString("class")));
+//                player.setStrength_(Integer.valueOf(params.get(6).getValue()));
+//                player.setAgility_(Integer.valueOf(params.get(7).getValue()));
+//                player.setInteligence_(Integer.valueOf(params.get(8).getValue()));
+                //ChestArmor chestArmor = new ChestArmor();
+				player.setStrength_(playerJson.getInt("str"));
+				player.setAgility_(playerJson.getInt("agi"));
+				player.setInteligence_(playerJson.getInt("int"));
+				player.setHealthPoints_(playerJson.getInt("hp"));
+				player.setManaPoints_(playerJson.getInt("mana"));
 			} else {
 				// failed to create player
 				Log.d("PostDataToDatabase", "Post was unsuccessful.");
@@ -144,11 +161,11 @@ public class SendNewCharacterToTheServer extends
 		try {
 			//FileOutputStream outputStream = new FileOutputStream(file);
 			//Save given ID to the external storage.
-			FileManager.writeFile(context.getFilesDir(), FILE_NAME, json.getString(TAG_ID));
+			FileManager.writeFile(context.getFilesDir(), FILE_NAME, playerJson.getString(TAG_ID));
 			String data = FileManager.readFile(context.getFilesDir(), FILE_NAME);
 			pDialog.dismiss();
 			//Show a toast telling user that his character was created.
-			Toast.makeText(context, json.getString(TAG_MESSAGE) + " : " + data, Toast.LENGTH_SHORT).show();
+			Toast.makeText(context, playerJson.getString(TAG_MESSAGE) + " : " + data, Toast.LENGTH_SHORT).show();
 		} catch (JSONException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
