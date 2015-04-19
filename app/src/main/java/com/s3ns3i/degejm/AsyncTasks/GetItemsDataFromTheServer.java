@@ -1,9 +1,19 @@
-package com.s3ns3i.degejm;
+package com.s3ns3i.degejm.AsyncTasks;
 
 import android.app.ProgressDialog;
 import android.content.Context;
 import android.os.AsyncTask;
 import android.util.Log;
+
+import com.s3ns3i.degejm.Player.Equipment.Boots;
+import com.s3ns3i.degejm.Player.Equipment.ChestArmor;
+import com.s3ns3i.degejm.Player.Equipment.Gloves;
+import com.s3ns3i.degejm.Player.Equipment.Helmet;
+import com.s3ns3i.degejm.Player.Items;
+import com.s3ns3i.degejm.JSONParser;
+import com.s3ns3i.degejm.Player.Equipment.Offhand;
+import com.s3ns3i.degejm.Player.Equipment.Ring;
+import com.s3ns3i.degejm.Player.Equipment.Weapon;
 
 import org.apache.http.NameValuePair;
 import org.apache.http.message.BasicNameValuePair;
@@ -74,7 +84,7 @@ public class GetItemsDataFromTheServer extends AsyncTask<String, String, String>
 	// ===================Constructor======================
 	//GetItemsDataFromTheServer(ArrayList<ArrayList<ArrayList<String>>> itemsList, Context context, View view) {
 	//GetItemsDataFromTheServer(ArrayList<ArrayList<Items>> itemsList, Context context, View view) {
-	GetItemsDataFromTheServer(ArrayList<ArrayList<Items>> itemsList, Context context) {
+	public GetItemsDataFromTheServer(ArrayList<ArrayList<Items>> itemsList, Context context) {
 		this.itemsList = itemsList;
 		//this.itemsListsDialogs = itemsListsDialogs;
 		this.context = context;

@@ -1,7 +1,7 @@
 /**
  * Base Class Items.java
  */
-package com.s3ns3i.degejm;
+package com.s3ns3i.degejm.Player;
 
 /**
  * @author Bartek

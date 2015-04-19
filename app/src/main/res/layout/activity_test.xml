@@ -29,7 +29,7 @@
 
     <fragment
         android:id="@+id/navigation_drawer"
-        android:name="com.s3ns3i.degejm.NavigationDrawerFragment"
+        android:name="com.s3ns3i.degejm.Fragments.NavigationDrawerFragment"
         android:layout_width="@dimen/navigation_drawer_width"
         android:layout_height="match_parent"
         android:layout_gravity="start"

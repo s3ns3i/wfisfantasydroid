@@ -1,4 +1,4 @@
-package com.s3ns3i.degejm;
+package com.s3ns3i.degejm.Fragments;
 
 import android.app.AlertDialog;
 import android.app.Dialog;
@@ -7,6 +7,9 @@ import android.content.DialogInterface;
 import android.os.Bundle;
 import android.util.Log;
 import android.widget.Button;
+
+import com.s3ns3i.degejm.Player.Items;
+import com.s3ns3i.degejm.R;
 
 import java.util.ArrayList;
 
@@ -23,12 +26,7 @@ public class AllItemsDialogFragment extends DialogFragment{
 	private CharSequence[] itemsCS;
 	private Integer positionOnItemList_;
 	private Button pressedButton;
-	
-	/**
-	 * 
-	 * @param items - ArrayList of item that will be shown 
-	 * @param selectedItem - returns clicked item to this reference.
-	 */
+
 //	public AllItemsDialogFragment(ArrayList<Items> items, Items selectedItem, Button pressedButton){
 //		this.items = items;
 //		this.selectedItem = selectedItem;

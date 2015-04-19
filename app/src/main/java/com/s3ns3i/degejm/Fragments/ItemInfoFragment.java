@@ -1,23 +1,26 @@
-package com.s3ns3i.degejm;
+package com.s3ns3i.degejm.Fragments;
 
 import android.app.AlertDialog;
 import android.app.Dialog;
 import android.app.DialogFragment;
 import android.os.Bundle;
 
+import com.s3ns3i.degejm.Player.Items;
+
 public class ItemInfoFragment extends DialogFragment {
 	
 	private Boolean isCompare = false;
 	private Items item
 	, itemToCompare;
-	/**
-	 * 
-	 * @param items - ArrayList of item that will be shown 
-	 * @param isCompare - leave null, if you create dialog to show stats of an item that player is already wearing.
-	 */
 	public ItemInfoFragment(){
 	}
 
+	/**
+	 *
+	 * @param item - ArrayList of item that will be shown
+	 * @param itemToCompare
+	 * @param isCompare - leave null, if you create dialog to show stats of an item that player is already wearing.
+	 */
     public void setArguments(Items item, Items itemToCompare, Boolean isCompare){
         this.item = item;
         this.itemToCompare = itemToCompare;

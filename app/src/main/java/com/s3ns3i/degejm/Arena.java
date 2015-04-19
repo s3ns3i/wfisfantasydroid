@@ -1,7 +1,7 @@
 package com.s3ns3i.degejm;
 
 
-
+import com.s3ns3i.degejm.Player.Player;
 
 public class Arena {
  

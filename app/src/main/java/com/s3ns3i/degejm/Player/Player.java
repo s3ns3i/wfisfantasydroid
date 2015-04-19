@@ -1,6 +1,13 @@
-package com.s3ns3i.degejm;
+package com.s3ns3i.degejm.Player;
 
 import com.google.android.gms.maps.model.LatLng;
+import com.s3ns3i.degejm.Player.Equipment.Boots;
+import com.s3ns3i.degejm.Player.Equipment.ChestArmor;
+import com.s3ns3i.degejm.Player.Equipment.Gloves;
+import com.s3ns3i.degejm.Player.Equipment.Helmet;
+import com.s3ns3i.degejm.Player.Equipment.Offhand;
+import com.s3ns3i.degejm.Player.Equipment.Ring;
+import com.s3ns3i.degejm.Player.Equipment.Weapon;
 
 import java.util.ArrayList;
 

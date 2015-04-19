@@ -1,10 +1,14 @@
-package com.s3ns3i.degejm;
+package com.s3ns3i.degejm.AsyncTasks;
 
 import android.app.ProgressDialog;
 import android.content.Context;
 import android.os.AsyncTask;
 import android.util.Log;
 import android.widget.Toast;
+
+import com.s3ns3i.degejm.FileManager;
+import com.s3ns3i.degejm.JSONParser;
+import com.s3ns3i.degejm.Player.Player;
 
 import org.apache.http.NameValuePair;
 import org.json.JSONException;
@@ -69,7 +73,7 @@ public class SendNewCharacterToTheServer extends
 	 * @param params
 	 *            - these are elements that we want to post to the server.
 	 */
-	SendNewCharacterToTheServer(String phpURL, List<NameValuePair> params,
+	public SendNewCharacterToTheServer(String phpURL, List<NameValuePair> params,
 			Context context, Player player) {
 		jsonParser = new JSONParser();
 		this.params = params;

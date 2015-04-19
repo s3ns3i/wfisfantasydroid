@@ -1,10 +1,12 @@
-package com.s3ns3i.degejm;
+package com.s3ns3i.degejm.AsyncTasks;
 
-import android.app.Dialog;
 import android.app.ProgressDialog;
 import android.content.Context;
 import android.os.AsyncTask;
 import android.util.Log;
+
+import com.s3ns3i.degejm.JSONParser;
+import com.s3ns3i.degejm.Player.Player;
 
 import org.apache.http.NameValuePair;
 import org.json.JSONException;

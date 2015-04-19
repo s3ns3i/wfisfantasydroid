@@ -1,8 +1,10 @@
-package com.s3ns3i.degejm;
+package com.s3ns3i.degejm.Player.Equipment;
 
-public class Boots extends Items {
+import com.s3ns3i.degejm.Player.Items;
 
-	public Boots(Integer ID_, Integer meeleDefense_, Integer magicDefense_,
+public class Offhand extends Items {
+
+	public Offhand(Integer ID_, Integer meeleDefense_, Integer magicDefense_,
 			Integer meeleAttack_, Integer magicAttack_, String imgURL_,
 			String name_, Integer cost_) {
 		super(ID_, meeleDefense_, magicDefense_, meeleAttack_, magicAttack_, imgURL_,
@@ -10,6 +12,5 @@ public class Boots extends Items {
 		// TODO Auto-generated constructor stub
 	}
 
-
-
+		
 }

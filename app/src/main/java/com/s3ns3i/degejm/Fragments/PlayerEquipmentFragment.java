@@ -1,4 +1,4 @@
-package com.s3ns3i.degejm;
+package com.s3ns3i.degejm.Fragments;
 
 import android.app.Fragment;
 import android.os.Bundle;
@@ -10,6 +10,13 @@ import android.view.View.OnLongClickListener;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.TextView;
+
+import com.s3ns3i.degejm.AsyncTasks.GetItemsDataFromTheServer;
+import com.s3ns3i.degejm.AsyncTasks.SendNewCharacterToTheServer;
+import com.s3ns3i.degejm.MainDrawerActivity;
+import com.s3ns3i.degejm.Player.Items;
+import com.s3ns3i.degejm.Player.Player;
+import com.s3ns3i.degejm.R;
 
 import org.apache.http.NameValuePair;
 import org.apache.http.message.BasicNameValuePair;

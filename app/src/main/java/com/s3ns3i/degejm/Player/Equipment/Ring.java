@@ -1,4 +1,6 @@
-package com.s3ns3i.degejm;
+package com.s3ns3i.degejm.Player.Equipment;
+
+import com.s3ns3i.degejm.Player.Items;
 
 public class Ring extends Items {
 

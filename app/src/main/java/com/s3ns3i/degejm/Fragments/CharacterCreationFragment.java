@@ -1,8 +1,7 @@
-package com.s3ns3i.degejm;
+package com.s3ns3i.degejm.Fragments;
 
 import android.app.Fragment;
 import android.app.FragmentTransaction;
-import android.content.Intent;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -15,6 +14,11 @@ import android.widget.EditText;
 import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
+
+import com.s3ns3i.degejm.AsyncTasks.GetDefaultCharacterDataFromTheServer;
+import com.s3ns3i.degejm.FileManager;
+import com.s3ns3i.degejm.MainDrawerActivity;
+import com.s3ns3i.degejm.R;
 
 import java.io.FileNotFoundException;
 import java.io.IOException;

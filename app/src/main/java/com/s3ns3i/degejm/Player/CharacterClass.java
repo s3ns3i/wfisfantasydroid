@@ -1,4 +1,4 @@
-package com.s3ns3i.degejm;
+package com.s3ns3i.degejm.Player;
 
 
 public class CharacterClass{

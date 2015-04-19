@@ -12,6 +12,11 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.s3ns3i.degejm.Fragments.CharacterCreationFragment;
+import com.s3ns3i.degejm.Fragments.NavigationDrawerFragment;
+import com.s3ns3i.degejm.Fragments.PlayerEquipmentFragment;
+import com.s3ns3i.degejm.Player.Player;
+
 import java.io.IOException;
 
 

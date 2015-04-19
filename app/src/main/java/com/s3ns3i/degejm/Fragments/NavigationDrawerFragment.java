@@ -1,4 +1,4 @@
-package com.s3ns3i.degejm;
+package com.s3ns3i.degejm.Fragments;
 
 
 import android.app.Activity;
@@ -24,6 +24,9 @@ import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
 import android.widget.Toast;
+
+import com.s3ns3i.degejm.NoWiFi;
+import com.s3ns3i.degejm.R;
 
 import java.net.NetworkInterface;
 

@@ -1,4 +1,4 @@
-package com.s3ns3i.degejm;
+package com.s3ns3i.degejm.AsyncTasks;
 
 import android.app.ProgressDialog;
 import android.content.Context;
@@ -8,6 +8,10 @@ import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.Spinner;
 import android.widget.TextView;
+
+import com.s3ns3i.degejm.Fragments.CharacterCreationFragment;
+import com.s3ns3i.degejm.JSONParser;
+import com.s3ns3i.degejm.R;
 
 import org.apache.http.NameValuePair;
 import org.json.JSONArray;
@@ -78,7 +82,7 @@ public class GetDefaultCharacterDataFromTheServer extends
 			progress5 = "Getting layout elements references...";
 
 	// ===================Constructor======================
-	GetDefaultCharacterDataFromTheServer(ArrayList<ArrayList<String>> racesList, ArrayList<ArrayList<String>> classesList, Context context, View view, CharacterCreationFragment characterCreation) {
+	public GetDefaultCharacterDataFromTheServer(ArrayList<ArrayList<String>> racesList, ArrayList<ArrayList<String>> classesList, Context context, View view, CharacterCreationFragment characterCreation) {
 		this.racesList = racesList;
 		this.classesList = classesList;
 		this.context = context;
