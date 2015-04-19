@@ -32,10 +32,10 @@ OnItemSelectedListener {
      */
     private static final String ARG_SECTION_NUMBER = "section_number"
     		, POOL_POINTS_ERROR = "You need to assign all points first!";
-	
+
 	private final String racesURL = "get_races.php"
 			, classesURL = "get_classes.php";
-	private final Integer numberOfDistributionalPoints = Integer.valueOf(20);
+	private final Integer numberOfDistributionalPoints = 20;
 
 	private ArrayList<Integer> statsArray;
 	private Integer pointPool;
@@ -92,7 +92,7 @@ OnItemSelectedListener {
 		
 		//Initializations
 		statsArray = new ArrayList<Integer>();
-		pointPool = Integer.valueOf(numberOfDistributionalPoints);
+		pointPool = numberOfDistributionalPoints;
 		messageLabel = (TextView) rootView.findViewById(R.id.MessageLabel);
 		baseHPTV = (TextView) rootView.findViewById(R.id.baseHPValueTextView);
 		baseManaTV = (TextView) rootView.findViewById(R.id.baseManaValueTextView);
@@ -186,8 +186,8 @@ OnItemSelectedListener {
 				bundle.putString(MainDrawerActivity.intKey, intTV.getText().toString());
 				bundle.putString(MainDrawerActivity.hpKey, baseHPTV.getText().toString());
 				bundle.putString(MainDrawerActivity.manaKey, baseManaTV.getText().toString());
-				Intent intent = new Intent();
-				intent.putExtra(MainDrawerActivity.bundleKey, bundle);
+//				Intent intent = new Intent();
+//				intent.putExtra(MainDrawerActivity.bundleKey, bundle);
 				PlayerEquipmentFragment PEF = new PlayerEquipmentFragment();
 				PEF.setArguments(bundle);
 				FragmentTransaction ft = getFragmentManager().beginTransaction();
@@ -197,7 +197,7 @@ OnItemSelectedListener {
 			}
 			break;
 		case R.id.baseHPDecrementButton:
-			if(pointPool == numberOfDistributionalPoints){
+			if(pointPool.equals(numberOfDistributionalPoints)){
 				break;
 			}
 			
@@ -221,7 +221,7 @@ OnItemSelectedListener {
 			break;
 			
 		case R.id.baseManaDecrementButton:
-			if(pointPool == numberOfDistributionalPoints){
+			if(pointPool.equals(numberOfDistributionalPoints)){
 				break;
 			}
 			
@@ -245,7 +245,7 @@ OnItemSelectedListener {
 			break;
 			
 		case R.id.strDecrementButton:
-			if(pointPool == numberOfDistributionalPoints){
+			if(pointPool.equals(numberOfDistributionalPoints)){
 				break;
 			}
 			
@@ -270,7 +270,7 @@ OnItemSelectedListener {
 			break;
 			
 		case R.id.agiDecrementButton:
-			if(pointPool == numberOfDistributionalPoints){
+			if(pointPool.equals(numberOfDistributionalPoints)){
 				break;
 			}
 			
@@ -295,7 +295,7 @@ OnItemSelectedListener {
 			break;
 			
 		case R.id.intDecrementButton:
-			if(pointPool == numberOfDistributionalPoints){
+			if(pointPool.equals(numberOfDistributionalPoints)){
 				break;
 			}
 			
@@ -320,7 +320,7 @@ OnItemSelectedListener {
 			break;
 			
 		case R.id.defaultStatsButton:
-			pointPool = Integer.valueOf(numberOfDistributionalPoints);
+			pointPool = numberOfDistributionalPoints;
 			pointPoolTV.setText(Integer.toString(pointPool));
 			setStatsArray(0, processedBaseHP);
 			setStatsArray(1, processedBaseMana);
@@ -346,7 +346,7 @@ OnItemSelectedListener {
 		//We check what spinner it is.
 		switch(currentSpinner){
 		case R.id.raceSpinner:
-			pointPool = Integer.valueOf(numberOfDistributionalPoints);
+			pointPool = numberOfDistributionalPoints;
 			pointPoolTV.setText(Integer.toString(pointPool));
 			//We set value from table with data.
 			processedStat = processStat(0);		//It only processes hp (0) and mana (1)
@@ -371,7 +371,7 @@ OnItemSelectedListener {
 			break;
 			
 		case R.id.classSpinner:
-			pointPool = Integer.valueOf(numberOfDistributionalPoints);
+			pointPool = numberOfDistributionalPoints;
 			pointPoolTV.setText(Integer.toString(pointPool));
 			//We set value from table with data.
 			processedStat = processStat(0);		//It only processes hp (0) and mana (1)
@@ -400,7 +400,7 @@ OnItemSelectedListener {
 	@Override
 	public void onNothingSelected(AdapterView<?> arg0) {
 		// TODO Auto-generated method stub
-		
+
 	}
 	
 	public String processStat(String stat, String modifier){
@@ -412,9 +412,8 @@ OnItemSelectedListener {
 	
 	public String processStat(Integer statNumber){
 		String stat = racesList.get(statNumber + 1).get((int) racesSpinner.getSelectedItemId())
-		,modifier = classesList.get(statNumber + 5).get((int) classesSpinner.getSelectedItemId())
-		, processedStat = processStat(stat, modifier);
-		return processedStat;
+		,modifier = classesList.get(statNumber + 5).get((int) classesSpinner.getSelectedItemId());
+		return processStat(stat, modifier);
 	}
 	
 	public ArrayList<Integer> getStatsArray(){

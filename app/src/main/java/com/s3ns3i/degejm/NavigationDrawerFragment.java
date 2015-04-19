@@ -4,6 +4,9 @@ package com.s3ns3i.degejm;
 import android.app.Activity;
 import android.app.ActionBar;
 import android.app.Fragment;
+import android.content.Context;
+import android.net.ConnectivityManager;
+import android.net.NetworkInfo;
 import android.support.v4.app.ActionBarDrawerToggle;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
@@ -21,6 +24,8 @@ import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
 import android.widget.Toast;
+
+import java.net.NetworkInterface;
 
 /**
  * Fragment used for managing interactions for and presentation of a navigation drawer.
@@ -107,7 +112,14 @@ public class NavigationDrawerFragment extends Fragment {
                         getString(R.string.title_section3),
                         getString(R.string.title_section4),
                 }));
-        mDrawerListView.setItemChecked(mCurrentSelectedPosition, true);
+        ConnectivityManager connectivityManager = (ConnectivityManager) getActivity().getSystemService(Context.CONNECTIVITY_SERVICE);
+        NetworkInfo wifi = connectivityManager.getNetworkInfo(ConnectivityManager.TYPE_WIFI);
+        NetworkInfo mobileWeb = connectivityManager.getNetworkInfo(ConnectivityManager.TYPE_MOBILE);
+        if(!(wifi.isConnected() || mobileWeb.isConnected())) {
+            mDrawerListView.setItemChecked(mCurrentSelectedPosition, false);
+            NoWiFi noWiFi = new NoWiFi(NoWiFi.Option.CLOSE);
+            noWiFi.show(getFragmentManager(), "noWiFiError");
+        }
         return mDrawerListView;
     }
 

@@ -159,7 +159,7 @@ public class GetDefaultCharacterDataFromTheServer extends
 				// +------------+---------+-----------+-----+-----+-----+
 				// | nazwa_rasy | base_hp | base_mana | STR | DEX | INT |
 				// +------------+---------+-----------+-----+-----+-----+
-				// | �odzianin  |     100 |       200 |  10 |  10 |  10 |
+				// | Łodzianin  |     100 |       200 |  10 |  10 |  10 |
 				// +------------+---------+-----------+-----+-----+-----+
 				// | LiManek    |     200 |         5 |   6 |  15 |   0 |
 				// +------------+---------+-----------+-----+-----+-----+
@@ -168,14 +168,14 @@ public class GetDefaultCharacterDataFromTheServer extends
 				for (int i = 0; i < racesTable.length(); i++) {
 					//This gets a single row from a table
 					// +------------+---------+-----------+-----+-----+-----+
-					// | �odzianin  |     100 |       200 |  10 |  10 |  10 |
+					// | Łodzianin  |     100 |       200 |  10 |  10 |  10 |
 					// +------------+---------+-----------+-----+-----+-----+
 					JSONObject tableRow = racesTable.getJSONObject(i);
 					// Storing each json item in List<String> object.
 					try {
 						//Now we get a single elements from each column.
 						// +------------+
-						// | �odzianin  |
+						// | Łodzianin  |
 						// +------------+
 						String temp;
 						for(int j = 0; j < numberofRacesTableColumns; j++){

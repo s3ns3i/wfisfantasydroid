@@ -66,7 +66,7 @@ public class SendNewCharacterToTheServer extends
 	 * @param phpURL
 	 *            - we need to give here a php page address, where we have
 	 *            posting code.
-	 * @param jObject
+	 * @param params
 	 *            - these are elements that we want to post to the server.
 	 */
 	SendNewCharacterToTheServer(String phpURL, List<NameValuePair> params,

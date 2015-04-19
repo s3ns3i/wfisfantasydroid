@@ -59,6 +59,8 @@
     <string name="title_activity_test">TestActivity</string>
     <color name="deep_blue">#3F48CC</color>
     <string name="title_activity_main_drawer">MainDrawerActivity</string>
-    
+
+    <string name="noWiFiError">You need a network connection to play this game.</string>
+    <string name="OK">OK</string>
 
 </resources>
