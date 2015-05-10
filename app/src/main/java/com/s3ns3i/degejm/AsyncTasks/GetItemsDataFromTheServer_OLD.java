@@ -5,15 +5,15 @@ import android.content.Context;
 import android.os.AsyncTask;
 import android.util.Log;
 
+import com.s3ns3i.degejm.JSONParser;
 import com.s3ns3i.degejm.Player.Equipment.Boots;
 import com.s3ns3i.degejm.Player.Equipment.ChestArmor;
 import com.s3ns3i.degejm.Player.Equipment.Gloves;
 import com.s3ns3i.degejm.Player.Equipment.Helmet;
-import com.s3ns3i.degejm.Player.Items;
-import com.s3ns3i.degejm.JSONParser;
 import com.s3ns3i.degejm.Player.Equipment.Offhand;
 import com.s3ns3i.degejm.Player.Equipment.Ring;
 import com.s3ns3i.degejm.Player.Equipment.Weapon;
+import com.s3ns3i.degejm.Player.Items;
 
 import org.apache.http.NameValuePair;
 import org.apache.http.message.BasicNameValuePair;
@@ -39,7 +39,7 @@ import java.util.List;
  * @author s3ns3i
  * 
  */
-public class GetItemsDataFromTheServer extends AsyncTask<String, String, String> {
+public class GetItemsDataFromTheServer_OLD extends AsyncTask<String, String, String> {
 	// TODO Here I need to load items that players character is currently wearing.
 	// ===============JSON related objects=================
 	// Creating JSON Parser object
@@ -51,11 +51,21 @@ public class GetItemsDataFromTheServer extends AsyncTask<String, String, String>
 	private static final String TAG_SUCCESS = "success";
 
 	// ===================Other objects====================
+	// Progress Dialog
+
+	private ProgressDialog pDialog;
+	private Boolean isGetSuccessful;
+	//private ListAdapter
+	//private ListAdapter itemsAdapter;
+	//private ArrayList<ArrayList<ArrayList<String>>> itemsList;
 	private ArrayList<ArrayList<Items>> itemsList;
-    private Integer numberofItemTypes = 7;
+	//private AlertDialog itemsListsDialogs;
+	//private ArrayAdapter<String> itemsAdapter;
+	//private View view;
+    private Integer numberofItemTypes = Integer.valueOf(7);
 
 	// ====================References======================
-//	private Context context;
+	private Context context;
 
 	// =====================Messages=======================
 	private final String[] message = { "Loading data from database."
@@ -70,10 +80,39 @@ public class GetItemsDataFromTheServer extends AsyncTask<String, String, String>
 			, "Connected! Now making a tables..."
 			, "Loading table with players items..."
 			, "Getting layout elements references..."};
+	//private Integer numberOfTasks= Integer.valueOf(progress.length);
 	// ===================Constructor======================
-	public GetItemsDataFromTheServer(ArrayList<ArrayList<Items>> itemsList) {
+	//GetItemsDataFromTheServer(ArrayList<ArrayList<ArrayList<String>>> itemsList, Context context, View view) {
+	//GetItemsDataFromTheServer(ArrayList<ArrayList<Items>> itemsList, Context context, View view) {
+	public GetItemsDataFromTheServer_OLD(ArrayList<ArrayList<Items>> itemsList, Context context) {
 		this.itemsList = itemsList;
+		//this.itemsListsDialogs = itemsListsDialogs;
+		this.context = context;
+		//this.view = view;
 	}
+
+	/**
+	 * Before starting background thread Show log message.
+	 * */
+	@Override
+	protected void onPreExecute() {
+		super.onPreExecute();
+		Log.d("GetDataFromDatabase", message[0]);
+		// First we need to open a progress dialog, so the main thread will stop
+		// and wait for this
+		// async task to end.
+		pDialog = new ProgressDialog(context);
+		pDialog.setMessage(progress[0]);
+		pDialog.setIndeterminate(false);
+		pDialog.setCancelable(true);
+		pDialog.setProgress(0);
+		pDialog.show();
+	}
+
+//	private Integer advanceProgress(Integer value, Integer numberOfTasks){
+//		Double temp = (value.doubleValue() / numberOfTasks.doubleValue()) * 100.0;
+//		return temp.intValue();
+//	}
 	/**
 	 * getting All products from url
 	 * */
@@ -98,9 +137,9 @@ public class GetItemsDataFromTheServer extends AsyncTask<String, String, String>
 			int successItems = jsonItems.getInt(TAG_SUCCESS);
 			if (successItems == 1) {
 				//Pobierz itemy
-				//Pętle tylko do jednego typu itemu.
-				//konstruktory wymagają wszystkich statów, więc od razu będzie krótszy kod.
-				//Ten poniżej trzeba wyrzucić.
+				//P�tle tylko do jednego typu itemu.
+				//konstruktory wymagaj� wszystkich stat�w, wi�c od razu b�dzie kr�tszy kod.
+				//Ten poni�ej trzeba wyrzuci�.
 				//Making an array of lists to store items in them.
 				for(int i = 0; i < numberofItemTypes; i++){
 					itemsList.add(new ArrayList<Items>());
@@ -112,7 +151,6 @@ public class GetItemsDataFromTheServer extends AsyncTask<String, String, String>
 				//[{"id":"1","name":"Szata Szelestu","cost":"1000","meele_defense":"10","magic_defense":"200","IMG":null},{"id":"3","name":"Szata Szelestu","cost":"1000","meele_defense":"10","magic_defense":"200","IMG":null}]
 				itemsTable[0] = jsonItems.getJSONArray(tableNames[0]);
 				//int lol = itemsTable[0].length();
-
 				for(int i = 0; i < itemsTable[0].length(); i++){
 					tableRow = itemsTable[0].getJSONObject(i);
 					//  0       1      2           3                4            5          6               7              8
@@ -236,7 +274,79 @@ public class GetItemsDataFromTheServer extends AsyncTask<String, String, String>
 							tableRow.getString(tableColumnIDs[1]),	//name
 							tableRow.getInt(tableColumnIDs[2])));	//cost
 				}
+				
+
+				//DO WYWALENIA
+				//Initialize list according to number of items.
+//				for(int i = 0; i < jsonItems.length(); i++){
+//					itemsList.add(new ArrayList<ArrayList<String>>());
+//					//Making suitable Lists.
+//					//Some items have less attributes, so we need to constantly check.
+//					JSONObject tableRow = itemsTable[i].getJSONObject(0);
+//					for(int j = 0; j < tableRow.length(); j++){
+//						itemsList.get(i).add(new ArrayList<String>());
+//					}
+//				}
+				
+				// Looping through all types of items (currently there's only 7 types of items)
+//				for(int i = 0; i < tableNames.length; i++){
+//					itemsList.add(new ArrayList<ArrayList<String>>());
+//					try {
+//						//Getting table with items of one type. (For example boots)
+//						itemsTable[i] = jsonItems.getJSONArray(tableNames[i]);
+//					} catch (JSONException e) {
+//						Log.d("GetDataFromDatabase", message[3] + " " + tableNames[i]);
+//					}
+//	
+//					// There we have to get items names and their stats.
+//					// It looks like this:
+//					// +----+-----------+-----------+------+----------------------------+-----------+----------+
+//					// | id | meele_def | magic_def | cost | name                       | meele_att | two_hand |
+//					// +----+-----------+-----------+------+----------------------------+-----------+----------+
+//					// | 2  |       100 |        30 |   20 | Cichobiegi Betlejemskie I  |         0 |        0 |
+//					// +----+-----------+-----------+------+----------------------------+-----------+----------+
+//					// | 2  |        20 |        10 |   20 | Gintoki's Black Boots      |         0 |        0 |
+//					// +----+-----------+-----------+------+----------------------------+-----------+----------+
+//					// | 2  |         5 |         5 |    5 | Cichobiegi Betlejemskie II |         0 |        0 |
+//					// +----+-----------+-----------+------+----------------------------+-----------+----------+
+//					//Looping through all items of one type.
+//					for (int j = 0; j < itemsTable[i].length(); j++) {
+//						itemsList.get(i).add(new ArrayList<String>());
+//						//This gets a single row from a table
+//						// +----+-----------+-----------+------+---------------------------+-----------+----------+
+//						// | 2  |       100 |        30 |   20 | Cichobiegi Betlejemskie I |         0 |        0 |
+//						// +----+-----------+-----------+------+---------------------------+-----------+----------+
+//						JSONObject tableRow = itemsTable[i].getJSONObject(j);
+//						// Storing each json item in List<String> object.
+//						try {
+//							String temp;
+//							//Now we get a single elements from each column.
+//							// +----+
+//							// | 2  |
+//							// +----+
+//							//Looping through all atributes of one item.
+//							for(int k = 0; k < tableRow.length(); k++){
+//								//Now we need to put this into one of the lists
+//								// +----+-----------+-----------+------+-----------------------+-----------+----------+
+//								// | id | meele_def | magic_def | cost | name                  | meele_att | two_hand |
+//								// +----+-----------+-----------+------+-----------------------+-----------+----------+
+//								temp = tableRow.getString(tableColumnIDs[k]);
+//								itemsList.get(i).get(j).add(temp);
+//							}
+//						} catch (JSONException e) {
+//							Log.d("GetDataFromDatabase", message[4]);
+//						}
+//
+//						Log.e("itemsList", itemsList.toString());
+//					}
+	
+					isGetSuccessful = true;
+//				}
+				// We get only names of the items.
+				//itemsAdapter = new ArrayAdapter<String>(context, android.R.layout.select_dialog_singlechoice, itemsList.get(0).get(1));
+				
 			} else {
+				isGetSuccessful = false;
 				Log.d("GetDataFromDatabase", message[6]);
 				return message[7];
 			}
@@ -244,6 +354,40 @@ public class GetItemsDataFromTheServer extends AsyncTask<String, String, String>
 			e.printStackTrace();
 		}
 
+		// Populating adapters with data
+//		itemsAdapter = new ArrayAdapter<String>(context,
+//				android.R.layout.simple_spinner_dropdown_item, itemsList.get(0));
+
 		return message[5];
 	}
+
+	protected void onProgressUpdate(String progress) {
+		pDialog.setMessage(progress);
+	}
+
+	/**
+	 * After completing background task Dismiss the progress dialog
+	 * **/
+	@Override
+	protected void onPostExecute(String connectionStatus) {
+		Log.d("GetDataFromDatabase", connectionStatus);
+		// Put items through adapter to the dialogs.
+		//Create Dialogs in PlayerEquipmentFragment and pass it there as an argument.
+		//Fill it with data.
+		
+		pDialog.dismiss();
+	}
+
+	public Boolean isGetSuccessful() {
+		return isGetSuccessful;
+	}
+	
+	protected void preparePlayersItems(){
+		
+	}
+	
+	protected void prepareAllItems(){
+		
+	}
+
 }

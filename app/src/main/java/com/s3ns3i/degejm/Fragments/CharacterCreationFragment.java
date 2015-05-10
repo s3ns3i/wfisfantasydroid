@@ -153,7 +153,8 @@ OnItemSelectedListener {
 		//playerParams = new ArrayList<NameValuePair>();
 		racesList = new ArrayList<ArrayList<String>>();
 		classesList = new ArrayList<ArrayList<String>>();
-		GT = new GetDefaultCharacterDataFromTheServer(racesList, classesList, getActivity(), rootView, this);
+//		GT = new GetDefaultCharacterDataFromTheServer(racesList, classesList, getActivity(), rootView, this);
+		GT = new GetDefaultCharacterDataFromTheServer(racesList, classesList);
 		try{
 			GT.execute(racesURL, classesURL);
 		}

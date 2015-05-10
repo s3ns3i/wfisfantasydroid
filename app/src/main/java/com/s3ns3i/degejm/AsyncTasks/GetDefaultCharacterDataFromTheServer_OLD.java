@@ -22,48 +22,49 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- * Tutaj trzeba
- * zrobić:
- * - wczytanie dwóch tablic do spinnerów,
+ * TODO Jednak wszystko b�dzie w jednym module. Tzn, ka�dy musi zrobi�
+ * wczytywanie danych z serwera na sw�j spos�b (je�li potrzebuje) Tutaj trzeba
+ * zrobi�:
+ * - wczytanie tw�ch tablic do spinner�w,
  * 	-- klasy
  * 	-- rasy
- * - wczytanie danych do trzech zmiennych i wyśćwietlić je (początkowe staty)
- * 	--siła
- * 	-- zręczność
+ * - wczytanie danych do trzech zmiennych i wy�wietli� je (pocz�tkowe staty)
+ * 	--si�a
+ * 	-- zr�czno��
  * 	-- inteligencja
  * 
  * @author s3ns3i
  * 
  */
-public class GetDefaultCharacterDataFromTheServer extends
+public class GetDefaultCharacterDataFromTheServer_OLD extends
 		AsyncTask<String, String, String> {
 
 	// ===============JSON related objects=================
-	// Creating JSON Parser object.
+	// Creating JSON Parser object
 	private JSONParser jParser = new JSONParser();
-	//Link to the server.
 	private static String url = "http://wfisfantasy.16mb.com/";
-	//Arrays that will hold downloaded races and classes.
 	private JSONArray racesTable = null, classesTable = null;
-	//Tag checking if download from the server succeeded.
 	private static final String TAG_SUCCESS = "success";
 
 	// ===================Other objects====================
-	//Names of the tables.
+	// Progress Dialog
 	private String []tableNames = {"race", "classes"}
-		//Columns names.
 			, raceTableColumnIDs = {"nazwa_rasy", "base_hp", "base_mana", "STR", "DEX", "INT"}
 			, classTableColumnIDs = {"class_name", "magic_attack", "meele_attack", "magic_defense", "meele_defense", "hp_modifier", "mana_modifier"};
-	//Progress dialog. It will cover the layout blocking any action from the user.
+
 	private ProgressDialog pDialog;
-	//
 	private Boolean isGetSuccessful;
-    private Integer numberofRacesTableColumns = 6;
-    private Integer numberofclassesTableColumns = 7;
+	private ArrayAdapter<String> racesAdapter, classesAdapter;
+	private ArrayList<ArrayList<String>> racesList, classesList;
+	private View view;
+	private CharacterCreationFragment characterCreation;
+    private Integer numberofRacesTableColumns = Integer.valueOf(6);
+    private Integer numberofclassesTableColumns = Integer.valueOf(7);
 
 	// ====================References======================
-	//These are references to the lists in the activity.
-	private ArrayList<ArrayList<String>> racesList, classesList;
+	private Context context;
+	private Spinner racesSpinner, classesSpinner;
+	private TextView baseHPTV, baseManaTV, strTV, agiTV, intTV;
 
 	// =====================Messages=======================
 	private final String message1 = "Loading data from database.",
@@ -81,9 +82,12 @@ public class GetDefaultCharacterDataFromTheServer extends
 			progress5 = "Getting layout elements references...";
 
 	// ===================Constructor======================
-	public GetDefaultCharacterDataFromTheServer(ArrayList<ArrayList<String>> racesList, ArrayList<ArrayList<String>> classesList){
+	public GetDefaultCharacterDataFromTheServer_OLD(ArrayList<ArrayList<String>> racesList, ArrayList<ArrayList<String>> classesList, Context context, View view, CharacterCreationFragment characterCreation) {
 		this.racesList = racesList;
 		this.classesList = classesList;
+		this.context = context;
+		this.view = view;
+		this.characterCreation = characterCreation;
 		
 		for(int i = 0; i < numberofRacesTableColumns; i++){
 			this.racesList.add(new ArrayList<String>());
@@ -92,6 +96,24 @@ public class GetDefaultCharacterDataFromTheServer extends
 		for(int j = 0; j < numberofclassesTableColumns; j++){
 			this.classesList.add(new ArrayList<String>());
 		}
+	}
+
+	/**
+	 * Before starting background thread Show log message.
+	 * */
+	@Override
+	protected void onPreExecute() {
+		super.onPreExecute();
+		Log.d("GetDataFromDatabase", message1);
+		// First we need to open a progress dialog, so the main thread will stop
+		// and wait for this
+		// async task to end.
+		pDialog = new ProgressDialog(context);
+		pDialog.setMessage(message2);
+		pDialog.setIndeterminate(false);
+		pDialog.setCancelable(true);
+		pDialog.setProgress(0);
+		pDialog.show();
 	}
 
 	/**
@@ -200,8 +222,62 @@ public class GetDefaultCharacterDataFromTheServer extends
 		}
 
 		publishProgress(progress5);
+		// Populating adapters with data
+		racesAdapter = new ArrayAdapter<String>(context,
+				android.R.layout.simple_spinner_dropdown_item, racesList.get(0));
+		classesAdapter = new ArrayAdapter<String>(context,
+				android.R.layout.simple_spinner_dropdown_item, classesList.get(0));
+		// Now loading those tables to spinners
+		racesSpinner = (Spinner) view.findViewById(R.id.raceSpinner);
+		classesSpinner = (Spinner) view.findViewById(R.id.classSpinner);
+		baseHPTV = (TextView) view.findViewById(R.id.baseHPValueTextView);
+		baseManaTV = (TextView) view.findViewById(R.id.baseManaValueTextView);
+		strTV = (TextView) view.findViewById(R.id.strengthValueTextView);
+		agiTV = (TextView) view.findViewById(R.id.agilityValueTextView);
+		intTV = (TextView) view.findViewById(R.id.intelligenceValueTextView);
 
 		return message6;
+	}
+
+	protected void onProgressUpdate(String progress) {
+		pDialog.setMessage(progress);
+	}
+
+	/**
+	 * After completing background task Dismiss the progress dialog
+	 * **/
+	protected void onPostExecute(String connectionStatus) {
+		Log.d("GetDataFromDatabase", connectionStatus);
+		if(isGetSuccessful){
+		//Setting adapters to spinners.
+		racesSpinner.setAdapter(racesAdapter);
+		classesSpinner.setAdapter(classesAdapter);
+		//Set basic stats
+		characterCreation.addToStatsArray(
+				characterCreation.processStat(
+						racesList.get(1).get(0), classesList.get(5).get(0)
+						));
+		baseHPTV.setText(characterCreation.getStatString(0));
+		characterCreation.addToStatsArray(
+				characterCreation.processStat(
+						racesList.get(2).get(0), classesList.get(6).get(0)
+				));
+		baseManaTV.setText(characterCreation.getStatString(1));
+		characterCreation.addToStatsArray(racesList.get(3).get(0));
+		characterCreation.addToStatsArray(racesList.get(4).get(0));
+		characterCreation.addToStatsArray(racesList.get(5).get(0));
+		strTV.setText(racesList.get(3).get(0));
+		agiTV.setText(racesList.get(4).get(0));
+		intTV.setText(racesList.get(5).get(0));
+		}
+		else{
+			Log.d("GetDataFromDatabase", message7);
+		}
+		pDialog.dismiss();
+	}
+
+	public Boolean isGetSuccessful() {
+		return isGetSuccessful;
 	}
 
 }

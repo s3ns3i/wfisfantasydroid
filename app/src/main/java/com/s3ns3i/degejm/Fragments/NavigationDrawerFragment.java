@@ -10,6 +10,7 @@ import android.net.NetworkInfo;
 import android.support.v4.app.ActionBarDrawerToggle;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
+//import android.support.v7.app.ActionBarDrawerToggle;
 import android.content.SharedPreferences;
 import android.content.res.Configuration;
 import android.os.Bundle;
@@ -23,12 +24,14 @@ import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
-import android.widget.Toast;
 
+import com.s3ns3i.degejm.AsyncTasks.LoadData;
 import com.s3ns3i.degejm.NoWiFi;
+import com.s3ns3i.degejm.Player.Items;
+import com.s3ns3i.degejm.Player.Player;
 import com.s3ns3i.degejm.R;
 
-import java.net.NetworkInterface;
+import java.util.ArrayList;
 
 /**
  * Fragment used for managing interactions for and presentation of a navigation drawer.
@@ -66,6 +69,24 @@ public class NavigationDrawerFragment extends Fragment {
     private boolean mFromSavedInstanceState;
     private boolean mUserLearnedDrawer;
 
+    /**
+     * The fragment argument representing the section number for this
+     * fragment.
+     */
+    private static final String ARG_SECTION_NUMBER = "section_number";
+    LoadData loadData;
+
+    /**
+     * Returns a new instance of this fragment for the given section
+     * number.
+     */
+    public static NavigationDrawerFragment newInstance(int sectionNumber) {
+        NavigationDrawerFragment fragment = new NavigationDrawerFragment();
+        Bundle args = new Bundle();
+        args.putInt(ARG_SECTION_NUMBER, sectionNumber);
+        fragment.setArguments(args);
+        return fragment;
+    }
     public NavigationDrawerFragment() {
     }
 
@@ -123,6 +144,21 @@ public class NavigationDrawerFragment extends Fragment {
             NoWiFi noWiFi = new NoWiFi(NoWiFi.Option.CLOSE);
             noWiFi.show(getFragmentManager(), "noWiFiError");
         }
+        // I hope that with this we will be able to get any objects.
+        // -player
+        // -racesList
+        // -classesList
+        // -itemsList
+        Player player;
+        ArrayList<ArrayList<String>> racesList;
+        ArrayList<ArrayList<String>> classesList;
+        ArrayList<ArrayList<Items>> itemsList;
+        player = (Player) savedInstanceState.get("player");
+        racesList = (ArrayList<ArrayList<String>>) savedInstanceState.get("racesList");
+        classesList = (ArrayList<ArrayList<String>>) savedInstanceState.get("classesList");
+        itemsList = (ArrayList<ArrayList<Items>>) savedInstanceState.get("itemsList");
+        loadData = new LoadData(getActivity().getApplicationContext(), racesList, classesList, itemsList);
+        loadData.execute();
         return mDrawerListView;
     }
 

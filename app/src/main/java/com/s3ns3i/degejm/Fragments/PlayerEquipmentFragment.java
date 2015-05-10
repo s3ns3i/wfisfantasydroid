@@ -132,7 +132,8 @@ public class PlayerEquipmentFragment extends Fragment implements OnClickListener
         for(int i = 0; i < numberOfItemTypes; i++){
         	playerItems[i] = new Items();
         }
-        GetItemsDataFromTheServer GIDFTS = new GetItemsDataFromTheServer(allItemsList, getActivity());
+//        GetItemsDataFromTheServer GIDFTS = new GetItemsDataFromTheServer(allItemsList, getActivity());
+		GetItemsDataFromTheServer GIDFTS = new GetItemsDataFromTheServer(allItemsList);
         try{
         	if(param1.isEmpty())
         		GIDFTS.execute(getAllItemsURL);

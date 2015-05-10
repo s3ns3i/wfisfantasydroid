@@ -29,3 +29,7 @@ proguard/
 *.log
 
 
+
+.idea/libraries/appcompat_v7_22_0_0.xml
+.idea/libraries/support_annotations_22_0_0.xml
+.idea/libraries/support_v4_22_0_0.xml
