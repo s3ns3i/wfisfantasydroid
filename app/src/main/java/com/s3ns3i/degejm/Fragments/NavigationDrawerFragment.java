@@ -4,9 +4,6 @@ package com.s3ns3i.degejm.Fragments;
 import android.app.Activity;
 import android.app.ActionBar;
 import android.app.Fragment;
-import android.content.Context;
-import android.net.ConnectivityManager;
-import android.net.NetworkInfo;
 import android.support.v4.app.ActionBarDrawerToggle;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
@@ -25,13 +22,7 @@ import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
 
-import com.s3ns3i.degejm.AsyncTasks.LoadData;
-import com.s3ns3i.degejm.NoWiFi;
-import com.s3ns3i.degejm.Player.Items;
-import com.s3ns3i.degejm.Player.Player;
 import com.s3ns3i.degejm.R;
-
-import java.util.ArrayList;
 
 /**
  * Fragment used for managing interactions for and presentation of a navigation drawer.
@@ -74,7 +65,6 @@ public class NavigationDrawerFragment extends Fragment {
      * fragment.
      */
     private static final String ARG_SECTION_NUMBER = "section_number";
-    LoadData loadData;
 
     /**
      * Returns a new instance of this fragment for the given section
@@ -136,29 +126,21 @@ public class NavigationDrawerFragment extends Fragment {
                         getString(R.string.title_section3),
                         getString(R.string.title_section4),
                 }));
-        ConnectivityManager connectivityManager = (ConnectivityManager) getActivity().getSystemService(Context.CONNECTIVITY_SERVICE);
-        NetworkInfo wifi = connectivityManager.getNetworkInfo(ConnectivityManager.TYPE_WIFI);
-        NetworkInfo mobileWeb = connectivityManager.getNetworkInfo(ConnectivityManager.TYPE_MOBILE);
-        if(!(wifi.isConnected() || mobileWeb.isConnected())) {
-            mDrawerListView.setItemChecked(mCurrentSelectedPosition, false);
-            NoWiFi noWiFi = new NoWiFi(NoWiFi.Option.CLOSE);
-            noWiFi.show(getFragmentManager(), "noWiFiError");
-        }
         // I hope that with this we will be able to get any objects.
         // -player
         // -racesList
         // -classesList
         // -itemsList
-        Player player;
-        ArrayList<ArrayList<String>> racesList;
-        ArrayList<ArrayList<String>> classesList;
-        ArrayList<ArrayList<Items>> itemsList;
-        player = (Player) savedInstanceState.get("player");
-        racesList = (ArrayList<ArrayList<String>>) savedInstanceState.get("racesList");
-        classesList = (ArrayList<ArrayList<String>>) savedInstanceState.get("classesList");
-        itemsList = (ArrayList<ArrayList<Items>>) savedInstanceState.get("itemsList");
-        loadData = new LoadData(getActivity().getApplicationContext(), racesList, classesList, itemsList);
-        loadData.execute();
+//        Player player;
+//        ArrayList<ArrayList<String>> racesList;
+//        ArrayList<ArrayList<String>> classesList;
+//        ArrayList<ArrayList<Items>> itemsList;
+//        player = (Player) savedInstanceState.get("player");
+//        racesList = (ArrayList<ArrayList<String>>) savedInstanceState.get("racesList");
+//        classesList = (ArrayList<ArrayList<String>>) savedInstanceState.get("classesList");
+//        itemsList = (ArrayList<ArrayList<Items>>) savedInstanceState.get("itemsList");
+//        loadData = new LoadData_OLD(getActivity().getApplicationContext(), racesList, classesList, itemsList);
+//        loadData.execute();
         return mDrawerListView;
     }
 

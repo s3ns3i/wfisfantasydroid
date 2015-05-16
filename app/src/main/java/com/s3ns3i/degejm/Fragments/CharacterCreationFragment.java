@@ -3,6 +3,7 @@ package com.s3ns3i.degejm.Fragments;
 import android.app.Fragment;
 import android.app.FragmentTransaction;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.View.OnClickListener;
@@ -18,6 +19,7 @@ import android.widget.Toast;
 import com.s3ns3i.degejm.AsyncTasks.GetDefaultCharacterDataFromTheServer;
 import com.s3ns3i.degejm.FileManager;
 import com.s3ns3i.degejm.MainDrawerActivity;
+import com.s3ns3i.degejm.Player.Items;
 import com.s3ns3i.degejm.R;
 
 import java.io.FileNotFoundException;
@@ -69,18 +71,24 @@ OnItemSelectedListener {
     , intelligenceIncrementButton
     , defaultStatsButton;
 	// Creating JSON Parser object
+
+	//Objects necessary to open character creation window and equipment.
+	ArrayList<ArrayList<Items>> itemsList;
     private ArrayList<ArrayList<String>> racesList
     , classesList;
+
     private GetDefaultCharacterDataFromTheServer GT;
     
 	/**
      * Returns a new instance of this fragment for the given section
      * number.
      */
-    public static CharacterCreationFragment newInstance(int sectionNumber) {
+    public static CharacterCreationFragment newInstance(int sectionNumber, Bundle args) {
         CharacterCreationFragment fragment = new CharacterCreationFragment();
-        Bundle args = new Bundle();
+//        Bundle args = new Bundle();
         args.putInt(ARG_SECTION_NUMBER, sectionNumber);
+		// We need to set arguments of this fragment. That's why I've added Bundle object as an
+		// argument.
         fragment.setArguments(args);
         return fragment;
     }
@@ -95,6 +103,49 @@ OnItemSelectedListener {
 				R.layout.fragment_character_creation, container, false);
 		
 		//Initializations
+		racesList = new ArrayList<ArrayList<String>>();
+		classesList = new ArrayList<ArrayList<String>>();
+		itemsList = new ArrayList<ArrayList<Items>>();
+
+		Bundle args = getArguments();
+		//Items from bundle
+//		int i = savedInstanceState.getInt("racesListSize");
+//		int j = savedInstanceState.getInt("classesListSize");
+//		int l = savedInstanceState.getInt("itemsListSize");
+//		int m = savedInstanceState.getInt("numberOf" + itemsList.get(l).getClass().getSimpleName());
+//		args.putInt("racesListSize", racesList.size());
+		for(int i = 0; i < args.getInt("racesListSize"); i++) {
+			racesList.add(args.getStringArrayList("racesListIndex" + i));
+			Log.d("racesList: ", racesList.get(i).toString());
+		}
+//		args.putInt("classesListSize", classesList.size());
+		for(int j = 0; j < args.getInt("classesListSize"); j++) {
+			classesList.add(args.getStringArrayList("classesListIndex" + j));
+			Log.d("classesList: ", classesList.get(j).toString());
+		}
+//		args.putInt("itemsListSize", itemsList.size());
+		for(int l = 0; l < args.getInt("itemsListSize"); l++){
+//			args.putInt("numberOf" + itemsList.get(l).getClass().getSimpleName(), itemsList.get(l).size());
+			for(int m = 0; m < args.getInt("numberOf" + itemsList.get(l).getClass().getSimpleName() + l); m++) {
+				args.getInt("getMeeleDefense" + l + m);
+				Log.d("itemsList: ", itemsList.toString());
+				args.getInt("getMagicDefense" + l + m);
+				Log.d("itemsList: ", itemsList.toString());
+				args.getInt("getMeeleAttack" + l + m);
+				Log.d("itemsList: ", itemsList.toString());
+				args.getInt("getMagicAttack" + l + m);
+				Log.d("itemsList: ", itemsList.toString());
+				args.getInt("itemCost" + l + m);
+				Log.d("itemsList: ", itemsList.toString());
+				args.getString("getImgURL" + l + m);
+				Log.d("itemsList: ", itemsList.toString());
+				args.getString("getName" + l + m);
+				Log.d("itemsList: ", itemsList.toString());
+				args.getInt("getPositionOnItemList" + l + m);
+				Log.d("itemsList: ", itemsList.toString());
+			}
+		}
+
 		statsArray = new ArrayList<Integer>();
 		pointPool = numberOfDistributionalPoints;
 		messageLabel = (TextView) rootView.findViewById(R.id.MessageLabel);
@@ -127,6 +178,7 @@ OnItemSelectedListener {
 			// TODO There we can check players id in the future.
 			e.printStackTrace();
 		}
+
 		baseHPDecrementButton = (Button) rootView.findViewById(R.id.baseHPDecrementButton);
 		baseHPDecrementButton.setOnClickListener(this);
         baseHPIncrementButton = (Button) rootView.findViewById(R.id.baseHPIncrementButton);
@@ -155,6 +207,7 @@ OnItemSelectedListener {
 		classesList = new ArrayList<ArrayList<String>>();
 //		GT = new GetDefaultCharacterDataFromTheServer(racesList, classesList, getActivity(), rootView, this);
 		GT = new GetDefaultCharacterDataFromTheServer(racesList, classesList);
+
 		try{
 			GT.execute(racesURL, classesURL);
 		}

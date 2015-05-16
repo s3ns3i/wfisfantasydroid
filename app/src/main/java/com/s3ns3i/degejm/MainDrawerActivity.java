@@ -4,28 +4,33 @@ import android.app.ActionBar;
 import android.app.Activity;
 import android.app.Fragment;
 import android.app.FragmentManager;
+import android.content.Context;
+import android.net.ConnectivityManager;
+import android.net.NetworkInfo;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v4.widget.DrawerLayout;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Toast;
 
 import com.s3ns3i.degejm.AsyncTasks.GetItemsDataFromTheServer;
 import com.s3ns3i.degejm.AsyncTasks.GetPlayer;
 import com.s3ns3i.degejm.AsyncTasks.LoadData;
+import com.s3ns3i.degejm.AsyncTasks.LoadData_OLD;
 import com.s3ns3i.degejm.Fragments.CharacterCreationFragment;
 import com.s3ns3i.degejm.Fragments.NavigationDrawerFragment;
 import com.s3ns3i.degejm.Fragments.PlayerEquipmentFragment;
 import com.s3ns3i.degejm.Player.Items;
 import com.s3ns3i.degejm.Player.Player;
 
-import org.apache.http.NameValuePair;
-
+import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.util.ArrayList;
-import java.util.List;
 
 
 public class MainDrawerActivity extends Activity
@@ -42,7 +47,11 @@ public class MainDrawerActivity extends Activity
     private CharSequence mTitle;
 
     //Objects from Character Creation Window
-    private final String registerURL = "register.php";
+    private final String registerURL = "register.php"
+            , racesURL = "get_races.php"
+            , classesURL = "get_classes.php"
+            , itemsURL = "get_all_items.php"
+            , currentEquipmentURL = "get_armor.php";
     public final static String singlePlayerKey = "single_player", nameKey = "name", raceKey = "race", raceIDKey = "race_id"
             , classKey = "class", classIDKey = "class_id", chestKey = "chest", bootsKey = "boots", glovesKey = "gloves"
             , helmetKey = "helm", weaponKey = "weapon", firstRingKey = "ring", secondRingKey = "ring2", offhandKey = "offhand"
@@ -61,8 +70,10 @@ public class MainDrawerActivity extends Activity
     ArrayList<ArrayList<String>> racesList;
     ArrayList<ArrayList<String>> classesList;
     ArrayList<ArrayList<Items>> itemsList;
-    List<NameValuePair> params;
-    GetItemsDataFromTheServer GIDFTS;
+//    List<NameValuePair> params;
+//    GetItemsDataFromTheServer GIDFTS;
+//    LoadData_OLD loadDataOLD;
+    LoadData loadData;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -77,26 +88,55 @@ public class MainDrawerActivity extends Activity
         mNavigationDrawerFragment.setUp(
                 R.id.navigation_drawer,
                 (DrawerLayout) findViewById(R.id.drawer_layout));
+
+
+        ConnectivityManager connectivityManager = (ConnectivityManager) getSystemService(Context.CONNECTIVITY_SERVICE);
+        NetworkInfo wifi = connectivityManager.getNetworkInfo(ConnectivityManager.TYPE_WIFI);
+        NetworkInfo mobileWeb = connectivityManager.getNetworkInfo(ConnectivityManager.TYPE_MOBILE);
+        if(!(wifi.isConnected() || mobileWeb.isConnected())) {
+//            NoWiFi noWiFi = NoWiFi.newInstance(NoWiFi.WAIT);
+            NoWiFi noWiFi = NoWiFi.newInstance();
+            noWiFi.show(getFragmentManager(), "noWiFiError");
+            return;
+        }
+
         player = new Player();
-//        loadData = new LoadData(getApplicationContext());
-//        loadData.execute();
+//        loadDataOLD = new LoadData_OLD(getApplicationContext());
+//        loadDataOLD.execute();
         //Workaround. Pod żadnym pozorem nie stosować tego w kodzie wynikowym.
 //        player.setPlayerID_("31");
 //        GetPlayer getPlayer = new GetPlayer("get_armor.php", getApplicationContext(), player);
 //        getPlayer.execute();
         try {
             player.setPlayerID_(FileManager.readPlayersIDFromFile());
-            GetPlayer getPlayer = new GetPlayer("get_armor.php", getApplicationContext(), player);
-            getPlayer.execute();
-            GIDFTS = new GetItemsDataFromTheServer(itemsList);
+            GetPlayer getPlayer = new GetPlayer(this, player);
+            getPlayer.execute(currentEquipmentURL);
+
+
+//            getPlayer.executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR, "get_armor.php");
+//            GIDFTS = new GetItemsDataFromTheServer(itemsList);
             // We already have an account, so we only get player info
             // and items to equip.
+        } catch(FileNotFoundException e){
+            //Workaround. Pod żadnym pozorem nie stosować tego w kodzie wynikowym.
+//            player.setPlayerID_("31");
         } catch (IOException e) {
             //If there was exception, it means, we don't have a player yet.
             // TODO Something with creating player or not.
 
             e.printStackTrace();
         }
+
+        racesList = new ArrayList<ArrayList<String>>();
+        classesList = new ArrayList<ArrayList<String>>();
+        itemsList = new ArrayList<ArrayList<Items>>();
+        loadData = new LoadData(this, racesList, classesList, itemsList);
+        loadData.execute(racesURL, classesURL, itemsURL);
+
+
+//        loadDataOLD = new LoadData_OLD(this, racesList, classesList, itemsList);
+//        loadDataOLD.executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR, racesURL, classesURL, itemsURL);
+//        loadDataOLD.execute(racesURL, classesURL, itemsURL);
     }
 
     @Override
@@ -107,23 +147,45 @@ public class MainDrawerActivity extends Activity
         switch(position) {
             case 0:
                 fragmentManager.beginTransaction()
-//                    .replace(R.id.container, PlaceholderFragment.newInstance(position + 1))
-                    .replace(R.id.container, NavigationDrawerFragment.newInstance(position + 1))
+                    .replace(R.id.container, PlaceholderFragment.newInstance(position + 1))
                     .commit();
                 break;
             case 1:
+                if(player.getPlayerID_() != null){
+                    Toast.makeText(this, "You already have a character!", Toast.LENGTH_LONG);
+                    break;
+                }
                 Bundle args = new Bundle();
                 args.putInt("racesListSize", racesList.size());
                 for(int i = 0; i < racesList.size(); i++)
-                    args.putStringArrayList("racesListIndex_" + i, racesList.get(i));
+                    args.putStringArrayList("racesListIndex" + i, racesList.get(i));
                 args.putInt("classesListSize", classesList.size());
                 for(int j = 0; j < classesList.size(); j++)
-                    args.putStringArrayList("classesListIndex_" + j, classesList.get(j));
+                    args.putStringArrayList("classesListIndex" + j, classesList.get(j));
                 args.putInt("itemsListSize", itemsList.size());
-                for(int k = 0; k < itemsList.size(); k++)
-                    args.putStringArrayList("itemsListIndex_" + k, itemsList.get(k));
+                for(int l = 0; l < itemsList.size(); l++){
+                    args.putInt("numberOf" + itemsList.get(l).getClass().getSimpleName() + l, itemsList.get(l).size());
+                    for(int m = 0; m < itemsList.get(l).size(); m++) {
+                        try {
+                            args.putInt("getMeeleDefense" + l + m, itemsList.get(l).get(m).getMeeleDefense_());
+                            args.putInt("getMagicDefense" + l + m, itemsList.get(l).get(m).getMagicDefense_());
+                            args.putInt("getMeeleAttack" + l + m, itemsList.get(l).get(m).getMeeleAttack_());
+                            args.putInt("getMagicAttack" + l + m, itemsList.get(l).get(m).getMagicAttack_());
+                            args.putInt("itemCost" + l + m, itemsList.get(l).get(m).getCost_());
+                            args.putString("getImgURL" + l + m, itemsList.get(l).get(m).getImgURL_());
+                            args.putString("getName" + l + m, itemsList.get(l).get(m).getName_());
+                            args.putInt("getPositionOnItemList" + l + m, itemsList.get(l).get(m).getPositionOnItemList_());
+                        } catch(Exception e){
+                            Log.d("bundle in Activity:\n", e.toString());
+                            e.printStackTrace();
+                        }
+                    }
+                }
+
                 fragmentManager.beginTransaction()
-                        .replace(R.id.container, CharacterCreationFragment.newInstance(position + 1))
+                        // To the arguments of the static method newInstance I've added Bundle argument.
+                        // Check the method and you will see what purpose it has.
+                        .replace(R.id.container, CharacterCreationFragment.newInstance(position + 1, args))
                         .commit();
                 break;
             case 2:
@@ -137,19 +199,19 @@ public class MainDrawerActivity extends Activity
 
     }
 
-//    public void onSectionAttached(int number) {
-//        switch (number) {
-//            case 1:
-//                mTitle = getString(R.string.title_section1);
-//                break;
-//            case 2:
-//                mTitle = getString(R.string.title_section2);
-//                break;
-//            case 3:
-//                mTitle = getString(R.string.title_section3);
-//                break;
-//        }
-//    }
+    public void onSectionAttached(int number) {
+        switch (number) {
+            case 1:
+                mTitle = getString(R.string.title_section1);
+                break;
+            case 2:
+                mTitle = getString(R.string.title_section2);
+                break;
+            case 3:
+                mTitle = getString(R.string.title_section3);
+                break;
+        }
+    }
 
     public void restoreActionBar() {
         ActionBar actionBar = getActionBar();
@@ -190,42 +252,40 @@ public class MainDrawerActivity extends Activity
     /**
      * A placeholder fragment containing a simple view.
      */
-//    public static class PlaceholderFragment extends Fragment {
-//        /**
-//         * The fragment argument representing the section number for this
-//         * fragment.
-//         */
-//        private static final String ARG_SECTION_NUMBER = "section_number";
-//
-//        /**
-//         * Returns a new instance of this fragment for the given section
-//         * number.
-//         */
-//        public static PlaceholderFragment newInstance(int sectionNumber) {
-//            PlaceholderFragment fragment = new PlaceholderFragment();
-//            Bundle args = new Bundle();
-//            args.putInt(ARG_SECTION_NUMBER, sectionNumber);
-//            fragment.setArguments(args);
-//            return fragment;
-//        }
-//
-//        public PlaceholderFragment() {
-//
-//
-//        }
-//
-//        @Override
-//        public View onCreateView(LayoutInflater inflater, ViewGroup container,
-//                                 Bundle savedInstanceState) {
-//            View rootView = inflater.inflate(R.layout.fragment_main_menu, container, false);
-//            return rootView;
-//        }
-//
-//        @Override
-//        public void onAttach(Activity activity) {
-//            super.onAttach(activity);
-//            ((MainDrawerActivity) activity).onSectionAttached(
-//                    getArguments().getInt(ARG_SECTION_NUMBER));
-//        }
-//    }
+    public static class PlaceholderFragment extends Fragment {
+        /**
+         * The fragment argument representing the section number for this
+         * fragment.
+         */
+        private static final String ARG_SECTION_NUMBER = "section_number";
+
+        /**
+         * Returns a new instance of this fragment for the given section
+         * number.
+         */
+        public static PlaceholderFragment newInstance(int sectionNumber) {
+            PlaceholderFragment fragment = new PlaceholderFragment();
+            Bundle args = new Bundle();
+            args.putInt(ARG_SECTION_NUMBER, sectionNumber);
+            fragment.setArguments(args);
+            return fragment;
+        }
+
+        public PlaceholderFragment() {
+        }
+
+        @Override
+        public View onCreateView(LayoutInflater inflater, ViewGroup container,
+                                 Bundle savedInstanceState) {
+            View rootView = inflater.inflate(R.layout.fragment_main_menu, container, false);
+            return rootView;
+        }
+
+        @Override
+        public void onAttach(Activity activity) {
+            super.onAttach(activity);
+            ((MainDrawerActivity) activity).onSectionAttached(
+                    getArguments().getInt(ARG_SECTION_NUMBER));
+        }
+    }
 }

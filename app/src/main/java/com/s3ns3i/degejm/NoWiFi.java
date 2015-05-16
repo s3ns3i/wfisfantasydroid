@@ -5,6 +5,7 @@ import android.app.AlertDialog;
 import android.app.Dialog;
 import android.app.DialogFragment;
 import android.content.DialogInterface;
+import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
 import android.app.Fragment;
@@ -14,30 +15,33 @@ import android.view.ViewGroup;
 
 public class NoWiFi extends DialogFragment {
 
-    public static enum Option{
-        CLOSE, WAIT
+//    private static final String OPTION = "option";
+//    public static final String WAIT = "wait";
+//    public static final String CLOSE = "close";
+
+    public NoWiFi(){}
+
+    public static NoWiFi newInstance(/*String option*/) {
+        NoWiFi fragment = new NoWiFi();
+//        Bundle bundle = new Bundle();
+//        bundle.putString(OPTION, option);
+//        fragment.setArguments(bundle);
+        return fragment;
     }
 
-    private Option option;
-
-    public NoWiFi(Option option){
-        this.option = option;
-    }
     @Override
-    public Dialog onCreateDialog(Bundle savedInstanceState) {
+    public Dialog onCreateDialog(final Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
         builder.setMessage(R.string.noWiFiError)
                 .setPositiveButton(R.string.OK, new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
-                        switch(option) {
-                            case CLOSE:
-                                getActivity().finish() ;
-                                break;
-                            case WAIT:
-                                break;
-                        }
+                        getActivity().finish();
+//                        if(CLOSE.equals(savedInstanceState.getString(CLOSE)))
+//                            getActivity().finish();
+//                        else if(WAIT.equals(savedInstanceState.getString(WAIT)))
+//                            return;
                     }
                 });
 

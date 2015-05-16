@@ -19,7 +19,7 @@ import java.util.List;
 /**
  * Created by s3ns3i on 2015-03-25.
  */
-public class GetPlayer extends AsyncTask <Void, Void, Void> {
+public class GetPlayer extends AsyncTask <String, Void, Void> {
 
     private Context context;
     private Player player;
@@ -34,18 +34,29 @@ public class GetPlayer extends AsyncTask <Void, Void, Void> {
 
     private static final String TAG_SUCCESS = "success";
 
-    public GetPlayer(String phpURL, Context context, Player player){
-        this.context = context;
+    public GetPlayer(/*String phpURL, */Context context, Player player){
+//        this.context = context;
         this.player = player;
         jsonParser = new JSONParser();
         params = new ArrayList<NameValuePair>();
-        this.url += phpURL;
+//        this.url += phpURL;
     }
 
     @Override
-    protected Void doInBackground(Void... voidParams) {
+    protected void onPreExecute() {
+        super.onPreExecute();
+        pDialog = new ProgressDialog(context);
+        pDialog.setMessage("Downloading player's data...");
+        pDialog.setIndeterminate(true);
+        pDialog.setCancelable(false);
+        pDialog.setProgress(0);
+        pDialog.show();
+    }
+
+    @Override
+    protected Void doInBackground(String... armorURL) {
         params.add(new BasicNameValuePair(playerIDKey, player.getPlayerID_()));
-        json = jsonParser.makeHttpRequest(url, "POST", params);
+        json = jsonParser.makeHttpRequest(url + armorURL[0], "POST", params);
         try {
             int success = json.getInt(TAG_SUCCESS);
             if(success == 1){
@@ -55,5 +66,11 @@ public class GetPlayer extends AsyncTask <Void, Void, Void> {
             e.printStackTrace();
         }
         return null;
+    }
+
+    @Override
+    protected void onPostExecute(Void aVoid) {
+        super.onPostExecute(aVoid);
+        pDialog.dismiss();
     }
 }

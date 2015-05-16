@@ -83,14 +83,14 @@ public class GetItemsDataFromTheServer extends AsyncTask<String, String, String>
 		// 'paramID' - a list, that is used when you want to post something on server.
 		List<NameValuePair> paramID = new ArrayList<NameValuePair>();
 		JSONObject jsonItems;
-		if(params.length == 1)
+//		if(params.length == 1)
+			// getting JSON string from URL
+			// At this point we get all tables that php could send us.
 			jsonItems = jParser.makeHttpRequest(url + params[0], "GET", paramID);
-		else{
-			paramID.add(new BasicNameValuePair("id", params[1]));
-		// getting JSON string from URL
-		// At this point we get all tables that php could send us.
-			jsonItems = jParser.makeHttpRequest(url + params[0], "POST", paramID);
-		}
+//		else{
+//			paramID.add(new BasicNameValuePair("id", params[1]));
+//			jsonItems = jParser.makeHttpRequest(url + params[0], "POST", paramID);
+//		}
 
 		try {
 			// Checking for SUCCESS TAG
